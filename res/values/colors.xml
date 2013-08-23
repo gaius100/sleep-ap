@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="white">#FFFFFFFF</color>
+    <color name="black">#FF000000</color>
+    <color name="darkred">#FFC00000</color>
+    <color name="darkgreen">#FF008200</color>
+    <color name="darkgrey">#FF454545</color>
+    <color name="transparent">#00000000</color>
+    <color name="translucentRed">#50FF0000</color>
+    <color name="translucentBlue">#500000FF</color>
+    <color name="translucentDarkGreen">#50009900</color>
+    <color name="windowBackground">#FF252040</color>
+    <color name="alertdialogbuttonpressedcolor">#FF447380</color>
+
+</resources>

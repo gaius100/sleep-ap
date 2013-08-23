@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menu_settings"
+          android:title="@string/settings"
+          android:showAsAction="never" />
+    <item android:id="@+id/menu_exit"
+          android:title="@string/exit"
+          android:showAsAction="never" />
+    <item android:id="@+id/menu_tour"
+          android:title="@string/tour"
+          android:showAsAction="never" />
+    <item android:id="@+id/menu_aboutus"
+          android:title="@string/aboutus"
+          android:showAsAction="never" />
+</menu>

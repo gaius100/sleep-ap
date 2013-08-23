@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/entire_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="25dp"
+    android:layout_marginRight="25dp"
+    android:layout_marginTop="25dp"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/soundSamplesIntro"
+        android:textSize="20sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="15dp"
+        android:background="@android:color/darker_gray" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal" >
+
+        <TextView
+            android:id="@+id/normalText"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="@string/normalPatient"
+            android:textSize="22sp" />
+
+        <Button
+            android:id="@+id/playNormal"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@id/normalText"
+            android:background="@drawable/avplay" />
+
+        <TextView
+            android:id="@+id/snorerText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@id/normalText"
+            android:layout_below="@id/normalText"
+            android:layout_marginTop="25dp"
+            android:gravity="right"
+            android:text="@string/snoringPatient"
+            android:textSize="22sp" />
+
+        <Button
+            android:id="@+id/playSnorer"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignRight="@id/playNormal"
+            android:layout_below="@id/normalText"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/avplay" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@id/normalText"
+            android:layout_below="@id/snorerText"
+            android:layout_marginTop="25dp"
+            android:gravity="right"
+            android:text="@string/osaPatient"
+            android:textSize="22sp" />
+
+        <Button
+            android:id="@+id/playOsa"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignRight="@id/playNormal"
+            android:layout_below="@id/snorerText"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/avplay" />
+    </RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/audioProgress"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp" />
+
+</LinearLayout>

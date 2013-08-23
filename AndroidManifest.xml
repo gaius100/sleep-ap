@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="ibme.sleepap"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="10"
+        android:targetSdkVersion="17" />
+
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
+    <application
+        android:allowBackup="false"
+        android:icon="@drawable/sleep_app"
+        android:label="@string/app_name"
+        android:theme="@style/sleepap_theme" >
+        <activity
+            android:name="ibme.sleepap.MainMenu"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="ibme.sleepap.history.ViewHistory" />
+        <activity android:name="ibme.sleepap.history.ViewAnalysis" />
+        <activity android:name="ibme.sleepap.Settings" />
+        <activity android:name="ibme.sleepap.Tour" />
+        <activity android:name="ibme.sleepap.SleepApActivity" />
+        <activity android:name="ibme.sleepap.education.OsaQuestions" />
+        <activity android:name="ibme.sleepap.education.OsaAnswers" />
+        <activity android:name="ibme.sleepap.education.AudioSamples" />
+        <activity android:name="ibme.sleepap.analysis.ChooseData" />
+        <activity
+            android:name="ibme.sleepap.analysis.PerformAnalysis"
+            android:screenOrientation="portrait" />
+        <activity android:name="ibme.sleepap.analysis.RecordingsList" />
+        <activity android:name="ibme.sleepap.recording.ChooseSignals" />
+        <activity android:name="ibme.sleepap.recording.TutorialPhone" />
+        <activity android:name="ibme.sleepap.recording.TutorialMicrophone" />
+        <activity android:name="ibme.sleepap.recording.TutorialPulseOx" />
+        <activity android:name="ibme.sleepap.recording.TutorialChecks" />
+        <activity android:name="ibme.sleepap.recording.PreRecordingChecklist" />
+        <activity
+            android:name="ibme.sleepap.recording.SignalsRecorder"
+            android:screenOrientation="portrait" />
+        <activity android:name="ibme.sleepap.screening.StopBangResults" />
+        <activity
+            android:name="ibme.sleepap.screening.StopBangQuestionnaire"
+            android:windowSoftInputMode="stateHidden" />
+    </application>
+
+</manifest>

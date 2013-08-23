@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <EditTextPreference
+        android:defaultValue="10"
+        android:dialogMessage="@string/graphPreferenceMessage"
+        android:dialogTitle="@string/graphPreferenceLabel"
+        android:icon="@drawable/deviceaccesstime"
+        android:key="pref_graphSeconds"
+        android:negativeButtonText="@string/cancelButtonLabel"
+        android:numeric="integer"
+        android:positiveButtonText="@string/ok"
+        android:selectAllOnFocus="true"
+        android:title="@string/graphPreferenceLabel" />
+    <EditTextPreference
+        android:defaultValue="3"
+        android:dialogMessage="@string/recordingsPreferenceMessage"
+        android:dialogTitle="@string/recordingsPreferenceLabel"
+        android:icon="@drawable/deviceaccessmic"
+        android:key="pref_numberRecordingsToKeep"
+        android:negativeButtonText="@string/cancelButtonLabel"
+        android:numeric="integer"
+        android:positiveButtonText="@string/ok"
+        android:selectAllOnFocus="true"
+        android:title="@string/recordingsPreferenceLabel" />
+    <EditTextPreference
+        android:defaultValue="@string/defaultMacAddress"
+        android:dialogMessage="@string/macAddressPreferenceMessage"
+        android:dialogTitle="@string/macAddressPreferenceLabel"
+        android:icon="@drawable/deviceaccessbluetoothsearching"
+        android:key="pref_macAddress"
+        android:negativeButtonText="@string/cancelButtonLabel"
+        android:positiveButtonText="@string/ok"
+        android:selectAllOnFocus="true"
+        android:title="@string/macAddressPreferenceLabel" />
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:icon="@drawable/alertsandstateswarning"
+        android:key="pref_notifications"
+        android:summary="@string/notificationsPreferenceSummary"
+        android:title="@string/notificationsPreferenceLabel" />
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:icon="@drawable/deviceaccessaccounts"
+        android:key="pref_advanced"
+        android:summary="@string/advancedUserPreferenceSummary"
+        android:title="@string/advancedUserPreferenceLabel" />
+
+    <PreferenceCategory android:title="@string/advancedSettings" >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:dependency="pref_advanced"
+            android:icon="@drawable/deviceaccesstime"
+            android:key="pref_recordingstartdelay"
+            android:summary="@string/recordingDelayPreferenceSummary"
+            android:title="@string/recordingDelayPreferenceLabel" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:dependency="pref_advanced"
+            android:icon="@drawable/collectionscollection"
+            android:key="pref_earlyexitfiledeletion"
+            android:summary="@string/fileDeletionPreferenceSummary"
+            android:title="@string/fileDeletionPreferenceLabel" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:dependency="pref_advanced"
+            android:icon="@drawable/deviceaccessbattery"
+            android:key="pref_spaceandbattery"
+            android:summary="@string/checkSpaceandbatteryPreferenceSummary"
+            android:title="@string/checkSpaceandbatteryPreferenceLabel" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:dependency="pref_advanced"
+            android:icon="@drawable/deviceaccessdialpad"
+            android:key="pref_writelog"
+            android:summary="@string/writeLogPreferenceSummary"
+            android:title="@string/writeLogPreferenceLabel" />
+        <ListPreference
+            android:defaultValue="3"
+            android:dependency="pref_advanced"
+            android:dialogTitle="@string/odiThresholdPreferenceLabel"
+            android:entries="@array/odithresholds_arrays"
+            android:entryValues="@array/odithresholdsVals_arrays"
+            android:icon="@drawable/navigationexpand"
+            android:key="pref_odithreshold"
+            android:negativeButtonText="@string/cancelButtonLabel"
+            android:positiveButtonText="@string/ok"
+            android:summary="@string/odiThresholdPreferenceSummary"
+            android:title="@string/odiThresholdPreferenceLabel" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

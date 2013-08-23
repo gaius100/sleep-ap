@@ -1,0 +1,20 @@
+Version 1.0 (beta) - released 23/07/13
+
+Version 1.1 (beta) - released 21/08/13
+	- Adjusted app navigation using back button
+	- Fixed crash during cloud processing of data without actigraphy
+	- Stopped user cancelling certain dialogs
+	- Removed mention of red circle in tutorial
+	- User now chooses "sensors to record from" instead of "signals to record"
+	- Stopped history buttons being clickable, adjustment of UI
+	- Modified 'welcome' and 'about' dialogs
+	- Help buttons for pre-recording checklist (including how to pair)
+	- Modified display of previous results
+	- Added tour of app
+	- Changed licence from Simplified BSD to GPL
+	- Started adding French language support
+	- Changed lowered battery/space requirements
+	- Changed order of tutorial
+	- Old questionnaire files now kept
+	
+Version 1.2 (beta) - not yet released

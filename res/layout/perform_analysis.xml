@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="15dp"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
+    android:layout_marginTop="15dp" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/analysisResults"
+            android:textSize="22sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="8dp"
+            android:background="@android:color/darker_gray" />
+
+        <TextView
+            android:id="@+id/overallRisk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/processingData"
+            android:textSize="22sp" />
+
+        <ImageView
+            android:id="@+id/thermometer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/thermometer"
+            android:src="@drawable/thermometer" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp" >
+
+            <TextView
+                android:id="@+id/detailedResultsTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/detailedResults"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/detailedResultsExpand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/detailedResultsTitle"
+                android:layout_alignParentRight="true"
+                android:contentDescription="@string/arrow"
+                android:src="@drawable/navigationexpand" />
+
+            <LinearLayout
+                android:id="@+id/detailedResults"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/detailedResultsTitle"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <RelativeLayout
+                    android:id="@+id/odiContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/metric_border"
+                    android:visibility="gone" >
+
+                    <TextView
+                        android:id="@+id/odi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:text="@string/odiDefaultScore"
+                        android:textSize="22sp" />
+
+                    <ImageButton
+                        android:id="@+id/odiHelp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="5dp"
+                        android:contentDescription="@string/help"
+                        android:src="@drawable/actionhelp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/stopBangContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/metric_border"
+                    android:visibility="gone" >
+
+                    <TextView
+                        android:id="@+id/stopBang"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:text="@string/stopBangDefaultScore"
+                        android:textSize="22sp" />
+
+                    <ImageButton
+                        android:id="@+id/stopBangHelp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="5dp"
+                        android:contentDescription="@string/help"
+                        android:src="@drawable/actionhelp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/svmOutputContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/metric_border"
+                    android:visibility="gone" >
+
+                    <TextView
+                        android:id="@+id/svmOutput"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:text="@string/svmDefaultScore"
+                        android:textSize="22sp" />
+
+                    <ImageButton
+                        android:id="@+id/svmHelp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="5dp"
+                        android:contentDescription="@string/help"
+                        android:src="@drawable/actionhelp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/cloudOutputContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/metric_border" >
+
+                    <TextView
+                        android:id="@+id/cloudOutput"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:text="@string/cloudDefaultScore"
+                        android:textSize="22sp" />
+
+                    <ImageButton
+                        android:id="@+id/cloudHelp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="5dp"
+                        android:contentDescription="@string/help"
+                        android:src="@drawable/actionhelp" />
+                </RelativeLayout>
+
+                <Button
+                    android:id="@+id/cloudButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/cloudButtonText"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/detailedResults"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="8dp"
+                android:background="@android:color/darker_gray" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</ScrollView>

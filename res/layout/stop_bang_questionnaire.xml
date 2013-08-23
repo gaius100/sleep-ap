@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
+    android:layout_marginTop="15dp"
+    android:orientation="vertical" >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="6"
+        android:scrollbars="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="20dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sb0"
+                android:textSize="16sp" />
+
+            <View
+                android:id="@+id/divider1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:background="@android:color/darker_gray" />
+
+            <TextView
+                android:id="@+id/stopbang1question"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="@string/sb1"
+                android:textSize="16sp" />
+
+            <RadioGroup
+                android:id="@+id/stopbang1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical" >
+
+                <RadioButton
+                    android:id="@+id/stopbang1ans1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/yes"
+                    android:textSize="16sp" />
+
+                <RadioButton
+                    android:id="@+id/stopbang1ans2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/no"
+                    android:textSize="16sp" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/stopbang2question"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="@string/sb2"
+                android:textSize="16sp" />
+
+            <RadioGroup
+                android:id="@+id/stopbang2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical" >
+
+                <RadioButton
+                    android:id="@+id/stopbang2ans1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/yes"
+                    android:textSize="16sp" />
+
+                <RadioButton
+                    android:id="@+id/stopbang2ans2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/no"
+                    android:textSize="16sp" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/stopbang3question"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="@string/sb3"
+                android:textSize="16sp" />
+
+            <RadioGroup
+                android:id="@+id/stopbang3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical" >
+
+                <RadioButton
+                    android:id="@+id/stopbang3ans1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/yes"
+                    android:textSize="16sp" />
+
+                <RadioButton
+                    android:id="@+id/stopbang3ans2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/no"
+                    android:textSize="16sp" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/stopbang4question"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="@string/sb4"
+                android:textSize="16sp" />
+
+            <RadioGroup
+                android:id="@+id/stopbang4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical" >
+
+                <RadioButton
+                    android:id="@+id/stopbang4ans1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/yes"
+                    android:textSize="16sp" />
+
+                <RadioButton
+                    android:id="@+id/stopbang4ans2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/no"
+                    android:textSize="16sp" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/stopbang5question"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="@string/sb5"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:id="@+id/stopbang5height"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="50dp"
+                    android:text="@string/height"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/heightentry1"
+                    android:layout_width="70dp"
+                    android:layout_height="50dp"
+                    android:hint="@string/dash"
+                    android:inputType="numberDecimal"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/heightentry2"
+                    android:layout_width="70dp"
+                    android:layout_height="50dp"
+                    android:hint="@string/dash"
+                    android:inputType="numberDecimal"
+                    android:textSize="16sp"
+                    android:visibility="invisible" />
+
+                <Spinner
+                    android:id="@+id/heightunit"
+                    android:layout_width="120dp"
+                    android:layout_height="50dp"
+                    android:entries="@array/heightunit_arrays"
+                    android:prompt="@string/heightunit_prompt"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/stopbang5weight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="50dp"
+                    android:text="@string/weight"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/weightentry1"
+                    android:layout_width="70dp"
+                    android:layout_height="50dp"
+                    android:hint="@string/dash"
+                    android:inputType="numberDecimal"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/weightentry2"
+                    android:layout_width="70dp"
+                    android:layout_height="50dp"
+                    android:hint="@string/dash"
+                    android:inputType="numberDecimal"
+                    android:textSize="16sp"
+                    android:visibility="invisible" />
+
+                <Spinner
+                    android:id="@+id/weightunit"
+                    android:layout_width="120dp"
+                    android:layout_height="50dp"
+                    android:entries="@array/weightunit_arrays"
+                    android:prompt="@string/weightunit_prompt"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/stopbang6question"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="@string/sb6"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:id="@+id/stopbang6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:text="@string/age"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/ageentry"
+                    android:layout_width="60dp"
+                    android:layout_height="50dp"
+                    android:hint="@string/dash"
+                    android:inputType="number"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/stopbang7question"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="@string/sb7"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:id="@+id/stopbang7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:text="@string/neckSize"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/necksizeentry"
+                    android:layout_width="80dp"
+                    android:layout_height="50dp"
+                    android:hint="@string/dash"
+                    android:inputType="numberDecimal"
+                    android:textSize="16sp" />
+
+                <Spinner
+                    android:id="@+id/necksizeunit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:entries="@array/necksizeunit_arrays"
+                    android:prompt="@string/necksizeunit_prompt"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/stopbang8question"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="@string/sb8"
+                android:textSize="16sp" />
+
+            <RadioGroup
+                android:id="@+id/stopbang8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical" >
+
+                <RadioButton
+                    android:id="@+id/stopbang8ans1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/male"
+                    android:textSize="16sp" />
+
+                <RadioButton
+                    android:id="@+id/stopbang8ans2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/female"
+                    android:textSize="16sp" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/stopbang9question"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="@string/sb9"
+                android:textSize="16sp" />
+
+            <Spinner
+                android:id="@+id/stopbang9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:entries="@array/ethnicity_arrays"
+                android:prompt="@string/ethnicity_prompt"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center" >
+
+        <Button
+            android:id="@+id/stopbangSubmit"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="@string/submitButtonText" />
+    </LinearLayout>
+
+</LinearLayout>
