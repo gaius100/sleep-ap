@@ -116,7 +116,7 @@ public class Constants {
 	public static final int PARAM_SWIPE_MIN_VELOCITY_DIP = 200;
 	public static final long PARAM_UI_UPDATE_PERIOD = 1000; // Milliseconds
 	public static final long PARAM_RECORDING_START = 1800000; // Milliseconds
-	public static final long PARAM_RECORDING_END = 16200000; // Milliseconds
+	public static final long PARAM_RECORDING_DURATION = 14400000; // Milliseconds
 	public static final long PARAM_REQUIRED_SPACE = 536870912; // Bytes
 	public static final float PARAM_REQUIRED_BATTERY = 0.6f; // proportion (1 is full)
 	public static final float PARAM_BATTERY_NOTIFICATION_THRESHOLD = 0.05f;
@@ -134,9 +134,9 @@ public class Constants {
 	public static final int CODE_BLUETOOTH_PACKET_RECEIVED = 4;
 	public static final int CODE_BLUETOOTH_REQUEST_ENABLE = 5;
 	public static final int CODE_APP_NOTIFICATION_ID = 0;
-	public static final int CODE_POSITION_SUPINE = 4;
-	public static final int CODE_POSITION_PRONE = 1;
-	public static final int CODE_POSITION_RIGHT = 2;
+	public static final int CODE_POSITION_SUPINE = 1;
+	public static final int CODE_POSITION_PRONE = 2;
+	public static final int CODE_POSITION_RIGHT = 4;
 	public static final int CODE_POSITION_LEFT = 3;
 	public static final int CODE_POSITION_SITTING = 5;
 	public static final String CODE_APP_TAG = "SleepAp";

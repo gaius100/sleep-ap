@@ -431,6 +431,7 @@ public class PreRecordingChecklist extends SleepApActivity {
 		updateAllDoneText();
 	}
 
+	@SuppressWarnings("deprecation")
 	private boolean isEnoughSpace() {
 		StatFs stats = new StatFs(Environment.getExternalStorageDirectory().toString());
 		double blocks = stats.getAvailableBlocks();

@@ -115,6 +115,7 @@ public class SignalsRecorder extends SleepApActivity implements SensorEventListe
 
 	private File orientationFile, accelerationFile, actigraphyFile, audioProcessedFile, audioRawFile, bodyPositionFile, ppgFile, spo2File;
 	private Position position = Position.Supine;
+	int oldPositionValue = Constants.CODE_POSITION_SUPINE;
 	private SensorManager sensorManager;
 	private Sensor accelerometer, magnetometer;
 	long accelerometerCurrentTime = 0;
@@ -340,9 +341,12 @@ public class SignalsRecorder extends SleepApActivity implements SensorEventListe
 						// Should we be recording yet?
 						if (timeSinceStartMillis > Constants.PARAM_RECORDING_START) {
 							startRecordingFlag = true;
-							// Got to tell extAudioRecorder as it's in a
-							// separate class and can't see startRecordingFlag.
-							extAudioRecorder.setShouldWrite(true);
+							if (audioEnabled) {
+								// Got to tell extAudioRecorder as it's in a
+								// separate class and can't see
+								// startRecordingFlag.
+								extAudioRecorder.setShouldWrite(true);
+							}
 							if (delayAlertDialog != null) {
 								delayAlertDialog.cancel();
 							}
@@ -358,7 +362,7 @@ public class SignalsRecorder extends SleepApActivity implements SensorEventListe
 						}
 					} else {
 						// We have started - should we finish now?
-						if (timeSinceStartMillis > Constants.PARAM_RECORDING_END) {
+						if (timeSinceStartMillis > Constants.PARAM_RECORDING_START + Constants.PARAM_RECORDING_DURATION) {
 							finishRecordingFlag = true;
 						}
 					}
@@ -423,7 +427,15 @@ public class SignalsRecorder extends SleepApActivity implements SensorEventListe
 					}
 
 					// Position.
-					positionDisplay.setText(getString(R.string.estimatedPosition) + " " + position.toString());
+					String positionText;
+					if (position == Position.Prone) {
+						positionText = "On front";						
+					} else if (position == Position.Supine) {
+						positionText = "On back";
+					} else {
+						positionText = position.toString();
+					}
+					positionDisplay.setText(getString(R.string.estimatedPosition) + " " + positionText);
 					
 					// Audio.
 					if (audioEnabled) {
@@ -520,6 +532,12 @@ public class SignalsRecorder extends SleepApActivity implements SensorEventListe
 		actigraphyQueue = new LinkedList<Double>();
 		positionDisplay = (TextView) findViewById(R.id.position);
 		recordingSign = (ImageView) findViewById(R.id.recordingSign);
+		
+		for(int i=0;i<5;++i)
+		{
+			totalPositionTime[i] = 0;
+		}
+		
 
 		// Battery check receiver.
 		registerReceiver(this.batteryLevelReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
@@ -901,7 +919,6 @@ public class SignalsRecorder extends SleepApActivity implements SensorEventListe
 					// The values (1,2,3,4) attributed for
 					// supine/prone/left/right match the
 					// ones attributed in VISI text files.
-					Position oldPosition = position;
 					int positionValue = 0;
 					// Supine (4).
 					if (-45 < mOrientation[1] && mOrientation[1] < 45 && -45 < mOrientation[2] && mOrientation[2] < 45) {
@@ -935,8 +952,9 @@ public class SignalsRecorder extends SleepApActivity implements SensorEventListe
 						position = Position.Sitting;
 					}
 
-					if ((oldPosition != position) && startRecordingFlag) {
-						updatePositionChangeTime(positionValue);
+					if ((oldPositionValue != positionValue) && (positionValue!=0) && startRecordingFlag) {
+						updatePositionChangeTime(oldPositionValue);
+						oldPositionValue = positionValue;
 						try {
 							// Write raw body position data
 							BufferedWriter orientationBufferedWriter = new BufferedWriter(new FileWriter(orientationFile, true));
@@ -1009,17 +1027,17 @@ public class SignalsRecorder extends SleepApActivity implements SensorEventListe
 		totalTime = Math.max(totalTime, 1);
 
 		// Computing % of time spent in each position
-		float supineProportion = ((float) totalPositionTime[0] * 100) / totalTime;
-		float proneProportion = ((float) totalPositionTime[1] * 100) / totalTime;
-		float rightProportion = ((float) totalPositionTime[2] * 100) / totalTime;
-		float leftProportion = ((float) totalPositionTime[3] * 100) / totalTime;
-		float sittingProportion = ((float) totalPositionTime[4] * 100) / totalTime;
+		float supineProportion = ((float) totalPositionTime[Constants.CODE_POSITION_SUPINE-1] * 100) / totalTime;
+		float proneProportion = ((float) totalPositionTime[Constants.CODE_POSITION_PRONE-1] * 100) / totalTime;
+		float rightProportion = ((float) totalPositionTime[Constants.CODE_POSITION_RIGHT-1] * 100) / totalTime;
+		float leftProportion = ((float) totalPositionTime[Constants.CODE_POSITION_LEFT-1] * 100) / totalTime;
+		float sittingProportion = ((float) totalPositionTime[Constants.CODE_POSITION_SITTING-1] * 100) / totalTime;
 
 		try {
 			// Writing data into file
 			BufferedWriter out = new BufferedWriter(new FileWriter(bodyPositionFile, true));
-			out.write(String.valueOf(supineProportion) + ',' + String.valueOf(proneProportion) + ',' + String.valueOf(rightProportion)
-					+ ',' + String.valueOf(leftProportion) + ',' + String.valueOf(sittingProportion) + " \n");
+			out.write(String.valueOf(supineProportion) + ',' + String.valueOf(proneProportion) + ',' + String.valueOf(leftProportion)
+					+ ',' + String.valueOf(rightProportion) + ',' + String.valueOf(sittingProportion) + " \n");
 			out.flush();
 			out.close();
 		} catch (IOException e) {

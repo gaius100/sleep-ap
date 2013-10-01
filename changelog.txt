@@ -17,4 +17,10 @@ Version 1.1 (beta) - released 21/08/13
 	- Changed order of tutorial
 	- Old questionnaire files now kept
 	
-Version 1.2 (beta) - not yet released
+Version 1.2 (beta) - released 01/10/13
+	- Removed cloud button
+	- Cleaned up language
+	- Fixed bug causing repeated analysis	
+	- SVM now probabilistic
+	- Fixed display of SVM classification
+	- Now targeting Android 4.3

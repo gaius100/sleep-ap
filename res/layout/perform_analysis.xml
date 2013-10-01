@@ -167,7 +167,8 @@
                     android:layout_height="50dp"
                     android:layout_marginBottom="15dp"
                     android:layout_marginTop="5dp"
-                    android:background="@drawable/metric_border" >
+                    android:background="@drawable/metric_border"
+                    android:visibility="gone" >
 
                     <TextView
                         android:id="@+id/cloudOutput"
@@ -196,7 +197,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:text="@string/cloudButtonText"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <View

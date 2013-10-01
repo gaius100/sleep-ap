@@ -158,9 +158,9 @@ public class RecordingsList extends SleepApActivity implements OnClickListener {
 	}
 
 	public String extractDateInfo(String fileName) {
-		String dateVal = fileName.substring(4, 6) + "/" + fileName.substring(6, 8) + "/" + fileName.substring(2, 4);
+		String dateVal = fileName.substring(6, 8) + "/" + fileName.substring(4, 6) + "/" + fileName.substring(2, 4);
 		String timeVal = fileName.substring(8, 10) + ":" + fileName.substring(10, 12) + ":" + fileName.substring(12, 14);
-		return timeVal + " on " + dateVal;
+		return timeVal + " " + getString(R.string.on) + " " + dateVal;
 	}
 	
 	@Override

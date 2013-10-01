@@ -54,6 +54,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class ViewHistory extends SleepApActivity {
 
@@ -69,17 +70,74 @@ public class ViewHistory extends SleepApActivity {
 		dbHelper = new DatabaseHelper(this);
 		database = dbHelper.getWritableDatabase();
 
-		Cursor cursor = database.query(HistoryTable.TABLE_NAME, HistoryTable.ALL_COLUMNS, null, null, null, null,
-				HistoryTable.COLUMN_START_DATE);
+		Cursor cursor = database.query(HistoryTable.TABLE_NAME, HistoryTable.ALL_COLUMNS, null, null, null, null, HistoryTable.COLUMN_START_DATE);
 		String[] fromColumns = { HistoryTable.COLUMN_START_DATE_DISPLAY, HistoryTable.COLUMN_ODI, HistoryTable.COLUMN_QUESTIONNAIRE,
-				HistoryTable.COLUMN_SVM_RESULT, HistoryTable.COLUMN_CLOUD_RESULT };
-		int[] toViews = { R.id.date, R.id.odi, R.id.questionnaire, R.id.svm, R.id.cloud };
+				HistoryTable.COLUMN_SVM_RESULT };
+		int[] toViews = { R.id.date, R.id.odi, R.id.questionnaire, R.id.svm };
 
 		if (cursor.getCount() > 0) {
 			findViewById(R.id.noHistoryFound).setVisibility(View.GONE);
 
 			SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.history_item, cursor, fromColumns, toViews, 0);
-			
+
+			adapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
+				@Override
+				public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
+					TextView textView = (TextView) view;
+					String name = cursor.getColumnName(columnIndex);
+					if (name.equals(HistoryTable.COLUMN_ODI)) {
+						String odi = cursor.getString(columnIndex);
+						textView.setText(odi);
+						if (odi.equals("-")) {
+							return true;
+						}
+						float odival = Float.parseFloat(odi);
+						int color;
+						if (odival < 5) {
+							color = 0xFF00FF00;
+						} else {
+							color = 0xFFFF0000;
+						}
+						textView.setTextColor(color);
+						return true;
+					}
+					if (name.equals(HistoryTable.COLUMN_QUESTIONNAIRE)) {
+						String stopBangScore = cursor.getString(columnIndex);
+						textView.setText(stopBangScore);
+						if (stopBangScore.equals("-")) {
+							return true;
+						}
+						int stopBangScoreVal = Integer.parseInt(stopBangScore);
+						int color;
+						if (stopBangScoreVal < 3) {
+							color = 0xFF00FF00;
+						} else {
+							color = 0xFFFF0000;
+						}
+						textView.setTextColor(color);
+						return true;
+					}
+					if (name.equals(HistoryTable.COLUMN_SVM_RESULT)) {
+						String svmScore = cursor.getString(columnIndex);
+						if (svmScore.equals("-")) {
+							textView.setText(svmScore);
+							return true;
+						}
+						Float stopBangScoreVal = Float.parseFloat(svmScore);
+						textView.setText(String.format("%.0f%%", stopBangScoreVal*100));
+						int color;
+						if (stopBangScoreVal < 0.5) {
+							color = 0xFF00FF00;
+						} else {
+							color = 0xFFFF0000;
+						}
+						textView.setTextColor(color);
+						return true;
+					}					
+					return false;
+				}
+			});
+
 			ListView listView = (ListView) findViewById(R.id.historyList);
 			listView.setAdapter(adapter);
 			listView.setOnItemClickListener(new OnItemClickListener() {
@@ -101,7 +159,7 @@ public class ViewHistory extends SleepApActivity {
 		database.close();
 		super.onDestroy();
 	}
-	
+
 	@Override
 	public void onBackPressed() {
 		Intent intent = new Intent(ViewHistory.this, MainMenu.class);

@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:clickable="false"
             android:enabled="false"
-            android:text="@string/actigraphyLabel"
+            android:text="@string/movementLabel"
             android:visibility="gone" />
 
         <CheckBox

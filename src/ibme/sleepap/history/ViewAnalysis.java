@@ -4,6 +4,7 @@ import ibme.sleepap.Constants;
 import ibme.sleepap.R;
 import ibme.sleepap.SleepApActivity;
 import ibme.sleepap.analysis.Thermometer;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -14,7 +15,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -53,20 +54,20 @@ public class ViewAnalysis extends SleepApActivity {
 			String odiScoreString = cursor.getString(cursor.getColumnIndexOrThrow(HistoryTable.COLUMN_ODI));
 			
 			cloudScore.setText(getString(R.string.cloudDefaultScore) + " " + cloudScoreString);
-			svmScore.setText(getString(R.string.svmDefaultScore) + " " + svmScoreString);
+			svmScore.setText(getString(R.string.svmDefaultScore) + " " + String.format("%.0f%%", (Float.parseFloat(svmScoreString))*100));
 			questionnaireScore.setText(getString(R.string.stopBangDefaultScore) + " " + questionnaireScoreString);
 			odiScore.setText(getString(R.string.odiDefaultScore) + " " + odiScoreString);
 			
-			if (cloudScoreString != null && cloudScoreString != "" && cloudScoreString != "-") {
+			if (cloudScoreString != null && !cloudScoreString.equals("") && !cloudScoreString.equals("-")) {
 				findViewById(R.id.cloudOutputContainer).setVisibility(View.VISIBLE);
 			}
-			if (svmScoreString != null && svmScoreString != "" && svmScoreString != "-") {
+			if (svmScoreString != null && !svmScoreString.equals("") && !svmScoreString.equals("-")) {
 				findViewById(R.id.svmOutputContainer).setVisibility(View.VISIBLE);
 			}
-			if (questionnaireScoreString != null && questionnaireScoreString != "" && questionnaireScoreString != "-") {
+			if (questionnaireScoreString != null && !questionnaireScoreString.equals("") && !questionnaireScoreString.equals("-")) {
 				findViewById(R.id.stopBangContainer).setVisibility(View.VISIBLE);
 			}
-			if (odiScoreString != null && odiScoreString != "" && odiScoreString != "-") {
+			if (odiScoreString != null && !odiScoreString.equals("") && !odiScoreString.equals("-")) {
 				findViewById(R.id.odiContainer).setVisibility(View.VISIBLE);
 			}
 			
@@ -90,7 +91,7 @@ public class ViewAnalysis extends SleepApActivity {
 				overallRisk.setTextColor(getResources().getColor(R.color.darkgreen));
 			}
 
-			((Button) findViewById(R.id.cloudButton)).setEnabled(false);
+			//((Button) findViewById(R.id.cloudButton)).setEnabled(false);
 		} else {
 			// TODO: handle
 		}
@@ -111,6 +112,23 @@ public class ViewAnalysis extends SleepApActivity {
 				}
 			}
 		});
+		
+		/** Set up help buttons. */
+		final int[] helpButtonIds = { R.id.odiHelp, R.id.stopBangHelp, R.id.svmHelp, R.id.cloudHelp };
+		final int[] helpTitleIds = { R.string.odiHelpTitle, R.string.stopBangHelpTitle, R.string.svmHelpTitle, R.string.cloudHelpTitle };
+		final int[] helpMessageIds = { R.string.odiHelpMessage, R.string.stopBangHelpMessage, R.string.svmHelpMessage, R.string.cloudHelpMessage };
+		for (int i = 0; i < helpButtonIds.length; i++) {
+			final int idx = i;
+			((ImageButton) findViewById(helpButtonIds[idx])).setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(ViewAnalysis.this);
+					dialogBuilder.setTitle(getString(helpTitleIds[idx])).setMessage(getString(helpMessageIds[idx]))
+							.setPositiveButton(getString(R.string.ok), null);
+					dialogBuilder.create().show();
+				}
+			});
+		}
 	}
 	
 	@Override
