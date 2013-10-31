@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2013, J. Behar, A. Roebuck, M. Shahid, J. Daly, A. Hallack, 
- * N. Palmius, G. Clifford (University of Oxford). All rights reserved.
+ * N. Palmius, K. Niehaus, G. Clifford (University of Oxford). All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without modification, 
  * are permitted provided that the following conditions are met:
@@ -69,10 +69,11 @@ public class MainMenu extends SleepApActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-		Intent sendingIntent = getIntent();
-		boolean cameFromMainMenuButton = sendingIntent.getBooleanExtra(Constants.EXTRA_HIDE_LICENCE, false);
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainMenu.this);
+		boolean isFirstTimeAppLaunched = sharedPreferences.getBoolean(Constants.PREF_FIRST_LAUNCH, true);
 
-		if (!cameFromMainMenuButton) {
+		if (isFirstTimeAppLaunched) {
+			sharedPreferences.edit().putBoolean(Constants.PREF_FIRST_LAUNCH, false).commit();
 			// Set up dialog box for licence.
 			final Dialog dialog = new Dialog(MainMenu.this);
 			dialog.setContentView(R.layout.welcome_dialog);
@@ -84,16 +85,8 @@ public class MainMenu extends SleepApActivity {
 			button.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainMenu.this);
-					boolean isFirstTimeAppLaunched = sharedPreferences.getBoolean(Constants.PREF_FIRST_LAUNCH, true);
-					if (isFirstTimeAppLaunched) {
-						dialog.dismiss();
-						sharedPreferences.edit().putBoolean(Constants.PREF_FIRST_LAUNCH, false).commit();
-						Intent intent = new Intent(MainMenu.this, Tour.class);
-						startActivity(intent);
-					} else {
-						dialog.dismiss();
-					}
+
+					dialog.dismiss();
 				}
 			});
 			Display display = getWindowManager().getDefaultDisplay();

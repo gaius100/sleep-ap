@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2013, J. Behar, A. Roebuck, M. Shahid, J. Daly, A. Hallack, 
- * N. Palmius, G. Clifford (University of Oxford). All rights reserved.
+ * N. Palmius, K. Niehaus, G. Clifford (University of Oxford). All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without modification, 
  * are permitted provided that the following conditions are met:
@@ -315,25 +315,14 @@ public class StopBangQuestionnaire extends SleepApActivity {
 					// Create CSV file. Don't change this without
 					// updating file reads elsewhere in the app, otherwise it's
 					// going to be crash central.
-					StringBuilder fileName = new StringBuilder();
-					fileName.append(Constants.FILENAME_QUESTIONNAIRE);
-					String newDirPath = Environment.getExternalStorageDirectory().toString() + "/" + getResources().getString(R.string.app_name) + "/" + Constants.FILENAME_QUESTIONNAIRE_DIRECTORY + "/";
+					File appDir = new File(Environment.getExternalStorageDirectory().toString() + "/" + getResources().getString(R.string.app_name) + "/");
 					
 					// Create a directory if there is no SD card.
-					File dir = new File(newDirPath);
-					if (!dir.exists()) {
-						dir.mkdirs();
+					if (!appDir.exists()) {
+						appDir.mkdirs();
 					}
 					
-					// If there's already a file from a previous questionnaire, rename it.
-					for (File oldFile : dir.listFiles()) {
-						if (oldFile.getName().equals(Constants.FILENAME_QUESTIONNAIRE)) {
-							// Rename the file.
-							oldFile.renameTo(new File(dir, "Old" + System.currentTimeMillis() + Constants.FILENAME_QUESTIONNAIRE));
-						}
-					}
-					
-					File outputFile = new File(newDirPath, fileName.toString());
+					File outputFile = new File(appDir, Constants.FILENAME_QUESTIONNAIRE);
 					FileWriter fileWriter = new FileWriter(outputFile);
 					BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 					for (int i = 0; i < responses.length; i++) {

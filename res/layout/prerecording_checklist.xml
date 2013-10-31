@@ -2,19 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="15dp"
-    android:layout_marginRight="15dp"
     android:layout_marginTop="15dp"
     android:orientation="vertical" >
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="6" >
+        android:layout_weight="5" >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:orientation="vertical" >
 
             <TextView
@@ -37,10 +37,10 @@
                 <CheckBox
                     android:id="@+id/completedQuestionnaire"
                     android:layout_width="match_parent"
-                    android:layout_marginRight="40dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/questionnaireJob"
                     android:layout_centerVertical="true"
+                    android:layout_marginRight="40dp"
+                    android:text="@string/questionnaireJob"
                     android:textSize="16sp" />
 
                 <ImageButton
@@ -48,8 +48,8 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_alignParentRight="true"
-                    android:src="@drawable/actionhelp"
-                    android:contentDescription="@string/help" />
+                    android:contentDescription="@string/help"
+                    android:src="@drawable/actionhelp" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -60,10 +60,10 @@
                 <CheckBox
                     android:id="@+id/silentMode"
                     android:layout_width="match_parent"
-                    android:layout_marginRight="40dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/silentModeJob"
                     android:layout_centerVertical="true"
+                    android:layout_marginRight="40dp"
+                    android:text="@string/silentModeJob"
                     android:textSize="16sp" />
 
                 <ImageButton
@@ -71,8 +71,8 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_alignParentRight="true"
-                    android:src="@drawable/actionhelp"
-                    android:contentDescription="@string/help" />
+                    android:contentDescription="@string/help"
+                    android:src="@drawable/actionhelp" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -84,10 +84,10 @@
                 <CheckBox
                     android:id="@+id/bluetoothMode"
                     android:layout_width="match_parent"
-                    android:layout_marginRight="40dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/bluetoothJob"
                     android:layout_centerVertical="true"
+                    android:layout_marginRight="40dp"
+                    android:text="@string/bluetoothJob"
                     android:textSize="16sp" />
 
                 <ImageButton
@@ -95,8 +95,8 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_alignParentRight="true"
-                    android:src="@drawable/actionhelp"
-                    android:contentDescription="@string/help" />
+                    android:contentDescription="@string/help"
+                    android:src="@drawable/actionhelp" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -108,10 +108,10 @@
                 <CheckBox
                     android:id="@+id/bluetoothPaired"
                     android:layout_width="match_parent"
-                    android:layout_marginRight="40dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/bluetoothPairedJob"
                     android:layout_centerVertical="true"
+                    android:layout_marginRight="40dp"
+                    android:text="@string/bluetoothPairedJob"
                     android:textSize="16sp" />
 
                 <ImageButton
@@ -119,8 +119,8 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_alignParentRight="true"
-                    android:src="@drawable/actionhelp"
-                    android:contentDescription="@string/help" />
+                    android:contentDescription="@string/help"
+                    android:src="@drawable/actionhelp" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -131,10 +131,10 @@
                 <CheckBox
                     android:id="@+id/space"
                     android:layout_width="match_parent"
-                    android:layout_marginRight="40dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/spaceJob"
                     android:layout_centerVertical="true"
+                    android:layout_marginRight="40dp"
+                    android:text="@string/spaceJob"
                     android:textSize="16sp" />
 
                 <ImageButton
@@ -142,8 +142,8 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_alignParentRight="true"
-                    android:src="@drawable/actionhelp"
-                    android:contentDescription="@string/help" />
+                    android:contentDescription="@string/help"
+                    android:src="@drawable/actionhelp" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -154,10 +154,10 @@
                 <CheckBox
                     android:id="@+id/battery"
                     android:layout_width="match_parent"
-                    android:layout_marginRight="40dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/batteryJob"
                     android:layout_centerVertical="true"
+                    android:layout_marginRight="40dp"
+                    android:text="@string/batteryJob"
                     android:textSize="16sp" />
 
                 <ImageButton
@@ -165,8 +165,8 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_alignParentRight="true"
-                    android:src="@drawable/actionhelp"
-                    android:contentDescription="@string/help" />
+                    android:contentDescription="@string/help"
+                    android:src="@drawable/actionhelp" />
             </RelativeLayout>
 
             <TextView
@@ -182,6 +182,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_weight="1"
         android:gravity="center"
         android:orientation="horizontal" >

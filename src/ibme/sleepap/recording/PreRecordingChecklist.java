@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2013, J. Behar, A. Roebuck, M. Shahid, J. Daly, A. Hallack, 
- * N. Palmius, G. Clifford (University of Oxford). All rights reserved.
+ * N. Palmius, K. Niehaus, G. Clifford (University of Oxford). All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without modification, 
  * are permitted provided that the following conditions are met:
@@ -455,17 +455,9 @@ public class PreRecordingChecklist extends SleepApActivity {
 	}
 
 	private boolean userHasDoneQuestionnaire() {
-		String newDirPath = Environment.getExternalStorageDirectory().toString() + "/" + getResources().getString(R.string.app_name)
-				+ "/Questionnaire/";
-		File directory = new File(newDirPath);
-		File[] contents = directory.listFiles();
-		if (contents == null) {
-			return false;
-		}
-		if (contents.length == 0) {
-			return false;
-		}
-		return true;
+		String questionnaireDirPath = Environment.getExternalStorageDirectory().toString() + "/" + getResources().getString(R.string.app_name)
+				+ "/" + Constants.FILENAME_QUESTIONNAIRE;
+		return (new File(questionnaireDirPath)).exists();
 	}
 
 	protected void updateAllDoneText() {

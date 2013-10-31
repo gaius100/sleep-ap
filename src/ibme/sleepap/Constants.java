@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2013, J. Behar, A. Roebuck, M. Shahid, J. Daly, A. Hallack, 
- * N. Palmius, G. Clifford (University of Oxford). All rights reserved.
+ * N. Palmius, K. Niehaus, G. Clifford (University of Oxford). All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without modification, 
  * are permitted provided that the following conditions are met:
@@ -47,11 +47,12 @@ public class Constants {
 	public static final String DEFAULT_GRAPH_RANGE = "10"; // Seconds
 	public static final String DEFAULT_NUMBER_RECORDINGS = "3";
 	public static final String DEFAULT_ODI_THRESHOLD = "3";
+	public static final String DEFAULT_RECORDING_START_DELAY = "30";
+	public static final String DEFAULT_RECORDING_DURATION = "240";
 	public static final boolean DEFAULT_NOTIFICATIONS = true;
 	public static final boolean DEFAULT_SHOULD_USE_ACTIGRAPHY = true;
 	public static final boolean DEFAULT_SHOULD_USE_AUDIO = true;
 	public static final boolean DEFAULT_SHOULD_USE_PPG = false;
-	public static final boolean DEFAULT_RECORDING_START_DELAY = true;
 	public static final boolean DEFAULT_EARLY_EXIT_DELETION = true;
 	public static final boolean DEFAULT_ADVANCED_USER = false;
 	public static final boolean DEFAULT_CHECK_SPACEANDBATTERY = true;
@@ -63,6 +64,7 @@ public class Constants {
 	public static final String PREF_GRAPH_SECONDS = "pref_graphSeconds";
 	public static final String PREF_NOTIFICATIONS = "pref_notifications";
 	public static final String PREF_RECORDING_START_DELAY = "pref_recordingstartdelay";
+	public static final String PREF_RECORDING_DURATION = "pref_recordingduration";
 	public static final String PREF_EARLY_EXIT_DELETION = "pref_earlyexitfiledeletion";
 	public static final String PREF_ADVANCED_USER = "pref_advanced";
 	public static final String PREF_CHECK_SPACEANDBATTERY = "pref_spaceandbattery";
@@ -80,12 +82,12 @@ public class Constants {
 	public static final String FILENAME_PPG = "ppg.dat";
 	public static final String FILENAME_SPO2 = "spo2.dat";
 	public static final String FILENAME_LOG_DIRECTORY = "log";
-	public static final String FILENAME_QUESTIONNAIRE_DIRECTORY = "Questionnaire";
 	public static final String FILENAME_QUESTIONNAIRE = "Questionnaire.dat";
 	public static final String FILENAME_ACCELERATION_MSE = "actigraphy_mse.dat";
 	public static final String FILENAME_AUDIO_MSE = "audio_mse.dat";
 	public static final String FILENAME_SVM_OUTPUT = "svm_output.dat";
-
+	public static final String FILENAME_FEEDBACK_DIRECTORY = "feedback";
+	
 	// Keys for extras transferred between activities.
 	public static final String EXTRA_ACTIGRAPHY_FILE = "actigraphyFile";
 	public static final String EXTRA_AUDIO_FILE = "audioFile";
@@ -93,7 +95,6 @@ public class Constants {
 	public static final String EXTRA_PPG_FILE = "ppgFile";
 	public static final String EXTRA_SPO2_FILE = "spo2File";
 	public static final String EXTRA_RECORDING_DIRECTORY = "recordingDir";
-	public static final String EXTRA_HIDE_LICENCE = "fromMainMenuButton";
 	public static final String EXTRA_SCORE = "stopbangscore";
 	public static final String EXTRA_RING_SETTING = "phoneRingSetting";
 	public static final String EXTRA_COLLECT_ACTIGRAPHY = "useActigraphy";
@@ -115,8 +116,6 @@ public class Constants {
 	public static final int PARAM_SWIPE_MAX_OFFPATH_DIP = 200;
 	public static final int PARAM_SWIPE_MIN_VELOCITY_DIP = 200;
 	public static final long PARAM_UI_UPDATE_PERIOD = 1000; // Milliseconds
-	public static final long PARAM_RECORDING_START = 1800000; // Milliseconds
-	public static final long PARAM_RECORDING_DURATION = 14400000; // Milliseconds
 	public static final long PARAM_REQUIRED_SPACE = 536870912; // Bytes
 	public static final float PARAM_REQUIRED_BATTERY = 0.6f; // proportion (1 is full)
 	public static final float PARAM_BATTERY_NOTIFICATION_THRESHOLD = 0.05f;
@@ -142,6 +141,7 @@ public class Constants {
 	public static final String CODE_APP_TAG = "SleepAp";
 
 	// Facts of life...
+	public static final int CONST_MILLIS_IN_MINUTE = 60000;
 	public static final float CONST_DEGREES_PER_RADIAN = 57.2957795f;
 	public static final String CONST_HTML_MIME_TYPE = "text/html";
 	public static final String CONST_UTF8_ENCODING = "UTF-8";

@@ -24,3 +24,14 @@ Version 1.2 (beta) - released 01/10/13
 	- SVM now probabilistic
 	- Fixed display of SVM classification
 	- Now targeting Android 4.3
+	
+Version 1.3 (beta) - released 31/10/13
+	- Added user-configurable delay before recording begins
+	- Added user-configurable recording duration
+	- Unique questionnaire file to be copied to recording directory every time recording begins.
+	- Added feedback form for trials
+	- Made recording notification sticky
+	- Fixed error in tour module
+	- Adjusted scrollbars to stop overlap with content
+	
+Version 1.4 (beta) - not yet released

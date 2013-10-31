@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2013, J. Behar, A. Roebuck, M. Shahid, J. Daly, A. Hallack, 
- * N. Palmius, G. Clifford (University of Oxford). All rights reserved.
+ * N. Palmius, K. Niehaus, G. Clifford (University of Oxford). All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without modification, 
  * are permitted provided that the following conditions are met:
@@ -100,8 +100,8 @@ public class PerformAnalysis extends SleepApActivity {
 
 	private SharedPreferences sharedPreferences;
 	private TextView questionnaireScore, svmScore, odiScore;
-	//private ServerAccess serverAccess;
-	//private Handler cloudStatusHandler;
+	// private ServerAccess serverAccess;
+	// private Handler cloudStatusHandler;
 	private File actigraphyFile, audioFile, demographicsFile, spo2File, recordingDir;
 	private List<Double> svmAudioValues = new ArrayList<Double>();
 	private List<Double> svmActigraphyValues = new ArrayList<Double>();
@@ -116,7 +116,7 @@ public class PerformAnalysis extends SleepApActivity {
 	private SQLiteDatabase datasource;
 	private Map<String, Object> cloudEntry = new LinkedHashMap<String, Object>();
 	private Date recordingDate;
-	//private Button cloudButton;
+	// private Button cloudButton;
 	private CalculateAudioMse calculateAudioMse;
 	private CalculateActigraphyMse calculateActigraphyMse;
 	private AnalyseDemographics analyseDemographics;
@@ -125,20 +125,18 @@ public class PerformAnalysis extends SleepApActivity {
 	private boolean runMachineLearningCalled = false;
 
 	private static final int[] mseScales = { 1, 2, 4, 8, 16, 32, 65, 130, 180 };
-	private static final double[] normalizingMean = { 1.070235, 0.866186, 0.706777, 0.699142, 0.629209, 0.525957, 
-		0.473172, 0.483983, 0.507266, 0.293280, 0.239864, 0.226303, 0.223415, 0.248910, 0.295175, 0.345406, 
-		0.361574, 0.365361, 0.667183, 48.921053, 16.715195, 68.235911, 221.274951, 33.480832, 21.975125 };
-	private static final double[] normalizingStd = {0.450591, 0.383389, 0.298440, 0.309937, 0.292578, 
-		0.225219, 0.192946, 0.197889, 0.208613, 0.114931, 0.107838, 0.117124, 0.102084, 0.095489, 
-		0.100784, 0.118337, 0.143646, 0.156476, 0.471587, 13.625727, 1.857124, 3.782977, 62.609251, 
-		9.437609, 28.630741};
+	private static final double[] normalizingMean = { 1.070235, 0.866186, 0.706777, 0.699142, 0.629209, 0.525957, 0.473172, 0.483983, 0.507266, 0.293280,
+			0.239864, 0.226303, 0.223415, 0.248910, 0.295175, 0.345406, 0.361574, 0.365361, 0.667183, 48.921053, 16.715195, 68.235911, 221.274951, 33.480832,
+			21.975125 };
+	private static final double[] normalizingStd = { 0.450591, 0.383389, 0.298440, 0.309937, 0.292578, 0.225219, 0.192946, 0.197889, 0.208613, 0.114931,
+			0.107838, 0.117124, 0.102084, 0.095489, 0.100784, 0.118337, 0.143646, 0.156476, 0.471587, 13.625727, 1.857124, 3.782977, 62.609251, 9.437609,
+			28.630741 };
 
-	/*private Runnable cloudStatusUpdater = new Runnable() {
-		@Override
-		public void run() {
-			serverAccess.UpdateStatus();
-		}
-	};*/
+	/*
+	 * private Runnable cloudStatusUpdater = new Runnable() {
+	 * 
+	 * @Override public void run() { serverAccess.UpdateStatus(); } };
+	 */
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -175,7 +173,8 @@ public class PerformAnalysis extends SleepApActivity {
 		actigraphyFile = (File) sendingIntent.getSerializableExtra(Constants.EXTRA_ACTIGRAPHY_FILE);
 		audioFile = (File) sendingIntent.getSerializableExtra(Constants.EXTRA_AUDIO_FILE);
 		demographicsFile = (File) sendingIntent.getSerializableExtra(Constants.EXTRA_DEMOGRAPHICS_FILE);
-		// ppgFile = (File) sendingIntent.getSerializableExtra(Constants.EXTRA_PPG_FILE);
+		// ppgFile = (File)
+		// sendingIntent.getSerializableExtra(Constants.EXTRA_PPG_FILE);
 		spo2File = (File) sendingIntent.getSerializableExtra(Constants.EXTRA_SPO2_FILE);
 		recordingDir = (File) sendingIntent.getSerializableExtra(Constants.EXTRA_RECORDING_DIRECTORY);
 		String recordingDateString = recordingDir.getName();
@@ -192,20 +191,20 @@ public class PerformAnalysis extends SleepApActivity {
 		questionnaireScore = (TextView) findViewById(R.id.stopBang);
 		svmScore = (TextView) findViewById(R.id.svmOutput);
 		odiScore = (TextView) findViewById(R.id.odi);
-		//cloudScore = (TextView) findViewById(R.id.cloudOutput);
+		// cloudScore = (TextView) findViewById(R.id.cloudOutput);
 
 		/** Set up cloud connection. */
-		/*cloudButton = ((Button) findViewById(R.id.cloudButton));
-		cloudButton.setEnabled(false);
-		cloudButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				serverAccess.sendData(cloudEntry);
-			}
-		});
-		cloudStatusHandler = new Handler();
-		serverAccess = new ServerAccess(this, cloudScore, cloudStatusHandler, cloudStatusUpdater);
-		serverAccess.setDB(datasource, recordingDateString);*/
+		/*
+		 * cloudButton = ((Button) findViewById(R.id.cloudButton));
+		 * cloudButton.setEnabled(false); cloudButton.setOnClickListener(new
+		 * OnClickListener() {
+		 * 
+		 * @Override public void onClick(View v) {
+		 * serverAccess.sendData(cloudEntry); } }); cloudStatusHandler = new
+		 * Handler(); serverAccess = new ServerAccess(this, cloudScore,
+		 * cloudStatusHandler, cloudStatusUpdater);
+		 * serverAccess.setDB(datasource, recordingDateString);
+		 */
 
 		/** Set up help buttons. */
 		final int[] helpButtonIds = { R.id.odiHelp, R.id.stopBangHelp, R.id.svmHelp, R.id.cloudHelp };
@@ -223,16 +222,17 @@ public class PerformAnalysis extends SleepApActivity {
 				}
 			});
 		}
-		
-		
-		//Query database to see if this recording has been analysed before. If it has we wipe the results and reanalyse - might want to change this in future. 
+
+		// Query database to see if this recording has been analysed before. If
+		// it has we wipe the results and reanalyse - might want to change this
+		// in future.
 		Cursor cursor = datasource.query(HistoryTable.TABLE_NAME, HistoryTable.ALL_COLUMNS, HistoryTable.COLUMN_START_DATE + " = " + recordingDateString, null,
 				null, null, null);
 		if (cursor.getCount() > 0) {
 			datasource.delete(HistoryTable.TABLE_NAME, HistoryTable.COLUMN_START_DATE + " = " + recordingDateString, null);
 		}
 		cursor.close();
-		
+
 		/** Set up detailed results. */
 		final ImageView expandDetailedResultsArrow = (ImageView) findViewById(R.id.detailedResultsExpand);
 		final LinearLayout detailedResults = (LinearLayout) findViewById(R.id.detailedResults);
@@ -312,7 +312,6 @@ public class PerformAnalysis extends SleepApActivity {
 		}
 		Intent intent = new Intent(PerformAnalysis.this, MainMenu.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		intent.putExtra(Constants.EXTRA_HIDE_LICENCE, true);
 		startActivity(intent);
 		finish();
 	}
@@ -515,14 +514,15 @@ public class PerformAnalysis extends SleepApActivity {
 	private class AnalyseSpo2 extends AsyncTask<Void, Void, Void> {
 		private float _odi;
 		private boolean _isRunning;
-		/** ODI calculated as described in
-		 *  Chung F, et al. Oxygen Desaturation Index from Nocturnal
-		 *	Oximetry: A Sensitive and Specific Tool to Detect 
-		 *  Sleep-Disordered Breathing in Surgical Patients. Anesthesia and
-		 *  analgesia May 2012; 114(5): 993- 1000.
-		
-		 *  This is algorithm is being optimized currently.
-		**/
+
+		/**
+		 * ODI calculated as described in Chung F, et al. Oxygen Desaturation
+		 * Index from Nocturnal Oximetry: A Sensitive and Specific Tool to
+		 * Detect Sleep-Disordered Breathing in Surgical Patients. Anesthesia
+		 * and analgesia May 2012; 114(5): 993- 1000.
+		 * 
+		 * This is algorithm is being optimized currently.
+		 **/
 		@Override
 		protected Void doInBackground(Void... params) {
 			_isRunning = true;
@@ -597,26 +597,26 @@ public class PerformAnalysis extends SleepApActivity {
 
 			/** For Testing Purposes **/
 
-			
-			/** double [] svmInputsTestPositiveArray= {0.7424, 0.2986,0.7830,0.3153,
-					 -0.1779,-0.3235,-0.2686,-0.0693,-0.1777,-1.1720,-0.9380,
-					 -0.9739,-0.8235,-0.8158,-1.0603,-1.4836,-0.9535,-0.3531,
-					 -1.4396, 1.1088, -0.3718,-1.9334, 0.7674, 1.8545, 1.1289}; // should return a 1 and probability of [0.9583 0.0417] 
-			double[] svmInputsTestNegativeArray= {1.5647, 1.0554, 0.8604, 0.6650, 
-					0.5185, 0.5481, 0.2661, 0.3582, 0.0754, -0.6229, -0.5877,
-					-0.6681, -0.6625, -0.7347, -0.6117, -0.2119, 0.1753, 0.0813,
-					0.6937, 3.1971, 0.4523, -0.3419, -0.4869, -0.3753, -0.6879};
-			
-			 List<Double> svmTestEx = new ArrayList<Double>(); 
-			 //for(int i = 0; i<svmInputsTestPositiveArray.length; i++){ // uncomment this for Positive result 
-				// svmTestEx.add(svmInputsTestPositiveArray[i]); 
-				 //}
-			 for(int i = 0; i<svmInputsTestNegativeArray.length; i++){ // uncomment this for Negative result
-				svmTestEx.add(svmInputsTestNegativeArray[i]); 
-			 	}
-			 svmResourceId= R.raw.actauddemoodi_svm;
-			// End Test Code
-				*/
+			/**
+			 * double [] svmInputsTestPositiveArray= {0.7424,
+			 * 0.2986,0.7830,0.3153,
+			 * -0.1779,-0.3235,-0.2686,-0.0693,-0.1777,-1.1720,-0.9380,
+			 * -0.9739,-0.8235,-0.8158,-1.0603,-1.4836,-0.9535,-0.3531, -1.4396,
+			 * 1.1088, -0.3718,-1.9334, 0.7674, 1.8545, 1.1289}; // should
+			 * return a 1 and probability of [0.9583 0.0417] double[]
+			 * svmInputsTestNegativeArray= {1.5647, 1.0554, 0.8604, 0.6650,
+			 * 0.5185, 0.5481, 0.2661, 0.3582, 0.0754, -0.6229, -0.5877,
+			 * -0.6681, -0.6625, -0.7347, -0.6117, -0.2119, 0.1753, 0.0813,
+			 * 0.6937, 3.1971, 0.4523, -0.3419, -0.4869, -0.3753, -0.6879};
+			 * 
+			 * List<Double> svmTestEx = new ArrayList<Double>(); //for(int i =
+			 * 0; i<svmInputsTestPositiveArray.length; i++){ // uncomment this
+			 * for Positive result //
+			 * svmTestEx.add(svmInputsTestPositiveArray[i]); //} for(int i = 0;
+			 * i<svmInputsTestNegativeArray.length; i++){ // uncomment this for
+			 * Negative result svmTestEx.add(svmInputsTestNegativeArray[i]); }
+			 * svmResourceId= R.raw.actauddemoodi_svm; // End Test Code
+			 */
 			svm_model svmModel = new svm_model();
 			try {
 				InputStream rawRes = getResources().openRawResource(svmResourceId);
@@ -625,9 +625,15 @@ public class PerformAnalysis extends SleepApActivity {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
+
 			double[] probabilityEstimates = new double[2];
-			svm_node[] svmNode = new svm_node[svmFeatures.size()]; // for testing- use svmTestEx instead of svmFeatures
+			svm_node[] svmNode = new svm_node[svmFeatures.size()]; // for
+																	// testing-
+																	// use
+																	// svmTestEx
+																	// instead
+																	// of
+																	// svmFeatures
 
 			// For test purposes use svmTestEx instead of svmFeatures in this
 			// loop.
@@ -637,7 +643,7 @@ public class PerformAnalysis extends SleepApActivity {
 				svmNode[i].value = svmFeatures.get(i);
 			}
 			svmModel.param.probability = 1; // this may not be necessary
-			
+
 			_svmOutput = svm.svm_predict_probability(svmModel, svmNode, probabilityEstimates);
 			// probabilityEstimates should give a percentage value of
 			// probability for each class/label ([apnea, non-apnea])
@@ -658,8 +664,9 @@ public class PerformAnalysis extends SleepApActivity {
 			String displayFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(recordingDate);
 			databaseEntry.put(HistoryTable.COLUMN_START_DATE, recordingDir.getName());
 			databaseEntry.put(HistoryTable.COLUMN_START_DATE_DISPLAY, displayFormat);
-			// The below rounds the SVM score to 2 s.f. before adding it to the database.
-			databaseEntry.put(HistoryTable.COLUMN_SVM_RESULT, String.format("%.2f", (((float) Math.round(_svmOutput*100))/100)));
+			// The below rounds the SVM score to 2 s.f. before adding it to the
+			// database.
+			databaseEntry.put(HistoryTable.COLUMN_SVM_RESULT, String.format("%.2f", (((float) Math.round(_svmOutput * 100)) / 100)));
 			databaseEntry.put(HistoryTable.COLUMN_CLOUD_RESULT, "-");
 			if (databaseEntry.getAsString(HistoryTable.COLUMN_ODI) == null) {
 				databaseEntry.put(HistoryTable.COLUMN_ODI, "-");
@@ -678,7 +685,7 @@ public class PerformAnalysis extends SleepApActivity {
 			// Update UI
 			progressDialog.dismiss();
 			TextView overallRisk = (TextView) findViewById(R.id.overallRisk);
-			svmScore.setText(getString(R.string.svmDefaultScore) + " " + String.format("%d%%", Math.round(_svmOutput*100)));
+			svmScore.setText(getString(R.string.svmDefaultScore) + " " + String.format("%d%%", Math.round(_svmOutput * 100)));
 			findViewById(R.id.svmOutputContainer).setVisibility(View.VISIBLE);
 			if (_svmOutput > 0.5) {
 				overallRisk.setText(getString(R.string.atRisk));
@@ -700,7 +707,7 @@ public class PerformAnalysis extends SleepApActivity {
 			thermometer.drawThermometer(_svmOutput);
 			thermometerImage.setImageDrawable(new BitmapDrawable(getResources(), mutableBitmap));
 
-			//cloudButton.setEnabled(true);
+			// cloudButton.setEnabled(true);
 		}
 
 		@Override

@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2013, J. Behar, A. Roebuck, M. Shahid, J. Daly, A. Hallack, 
- * N. Palmius, G. Clifford (University of Oxford). All rights reserved.
+ * N. Palmius, K. Niehaus, G. Clifford (University of Oxford). All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without modification, 
  * are permitted provided that the following conditions are met:
@@ -51,8 +51,13 @@ import ibme.sleepap.analysis.ChooseData;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -66,6 +71,7 @@ import java.util.Queue;
 
 import android.app.AlertDialog;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
@@ -154,6 +160,7 @@ public class SignalsRecorder extends SleepApActivity implements SensorEventListe
 	private Bundle extras;
 	private boolean screenLocked;
 	private boolean actigraphyEnabled, audioEnabled, ppgEnabled;
+	private int recordingStartDelayMs, recordingDurationMs;
 
 	private enum Position {
 		Supine, Prone, Left, Right, Sitting
@@ -226,18 +233,16 @@ public class SignalsRecorder extends SleepApActivity implements SensorEventListe
 			SignalsRecorder activityReference = weakReference.get();
 			switch (message.what) {
 			case Constants.CODE_BLUTOOTH_NO_PAIRED_DEVICES:
-				Toast.makeText(activityReference.getApplicationContext(), activityReference.getString(R.string.noPairedDevices),
-						Toast.LENGTH_LONG).show();
+				Toast.makeText(activityReference.getApplicationContext(), activityReference.getString(R.string.noPairedDevices), Toast.LENGTH_LONG).show();
 				break;
 			case Constants.CODE_BLUETOOTH_CONNECTION_UNSUCCESSFUL:
-				Toast.makeText(activityReference.getApplicationContext(),
-						activityReference.getString(R.string.bluetoothConnectionUnsuccessful), Toast.LENGTH_LONG).show();
+				Toast.makeText(activityReference.getApplicationContext(), activityReference.getString(R.string.bluetoothConnectionUnsuccessful),
+						Toast.LENGTH_LONG).show();
 				activityReference.reconnectButton.setClickable(true);
 				activityReference.reconnectButton.setEnabled(true);
 				break;
 			case Constants.CODE_BLUETOOTH_CONNECTION_SUCCESSFUL:
-				Toast.makeText(activityReference.getApplicationContext(), activityReference.getString(R.string.bluetoothConnected),
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(activityReference.getApplicationContext(), activityReference.getString(R.string.bluetoothConnected), Toast.LENGTH_SHORT).show();
 				break;
 			case Constants.CODE_BLUETOOTH_PACKET_RECEIVED:
 				// Write PPG and SpO2 data to file.
@@ -304,7 +309,8 @@ public class SignalsRecorder extends SleepApActivity implements SensorEventListe
 			_audioPlot = (XYPlot) findViewById(R.id.audioPlot);
 			_ppgPlot = (XYPlot) findViewById(R.id.ppgPlot);
 			_plf = new PointLabelFormatter(getResources().getColor(R.color.transparent));
-			_activityFormatter = new LineAndPointFormatter(getResources().getColor(R.color.darkgreen), null, getResources().getColor(R.color.translucentDarkGreen), _plf);
+			_activityFormatter = new LineAndPointFormatter(getResources().getColor(R.color.darkgreen), null, getResources().getColor(
+					R.color.translucentDarkGreen), _plf);
 			_audioFormatter = new LineAndPointFormatter(Color.BLUE, null, getResources().getColor(R.color.translucentBlue), _plf);
 			_ppgFormatter = new LineAndPointFormatter(Color.RED, null, getResources().getColor(R.color.translucentRed), _plf);
 
@@ -339,7 +345,7 @@ public class SignalsRecorder extends SleepApActivity implements SensorEventListe
 					long timeSinceStartMillis = now.getTimeInMillis() - startTime.getTimeInMillis();
 					if (!startRecordingFlag) {
 						// Should we be recording yet?
-						if (timeSinceStartMillis > Constants.PARAM_RECORDING_START) {
+						if (timeSinceStartMillis > recordingStartDelayMs) {
 							startRecordingFlag = true;
 							if (audioEnabled) {
 								// Got to tell extAudioRecorder as it's in a
@@ -354,15 +360,14 @@ public class SignalsRecorder extends SleepApActivity implements SensorEventListe
 							if (sharedPreferences.getBoolean(Constants.PREF_NOTIFICATIONS, Constants.DEFAULT_NOTIFICATIONS)) {
 								NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext())
 										.setSmallIcon(R.drawable.notification_icon)
-										.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.deviceaccessmic))
-										.setContentTitle("SleepAp").setContentText(getString(R.string.startedRecordingNotification))
-										.setAutoCancel(true);
+										.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.deviceaccessmic)).setContentTitle("SleepAp")
+										.setContentText(getString(R.string.startedRecordingNotification)).setAutoCancel(true);
 								notificationManager.notify(Constants.CODE_APP_NOTIFICATION_ID, builder.build());
 							}
 						}
 					} else {
 						// We have started - should we finish now?
-						if (timeSinceStartMillis > Constants.PARAM_RECORDING_START + Constants.PARAM_RECORDING_DURATION) {
+						if (timeSinceStartMillis > recordingStartDelayMs + recordingDurationMs) {
 							finishRecordingFlag = true;
 						}
 					}
@@ -422,21 +427,21 @@ public class SignalsRecorder extends SleepApActivity implements SensorEventListe
 						_activityPlot.clear();
 						_activityPlot.addSeries(_activitySeries, _activityFormatter);
 						_activityPlot.redraw();
-						_activityPlot.setRangeBoundaries(Constants.PARAM_ACTIVITY_GRAPH_MIN_Y, BoundaryMode.FIXED,
-								Constants.PARAM_ACTIVITY_GRAPH_MAX_Y, BoundaryMode.FIXED);
+						_activityPlot.setRangeBoundaries(Constants.PARAM_ACTIVITY_GRAPH_MIN_Y, BoundaryMode.FIXED, Constants.PARAM_ACTIVITY_GRAPH_MAX_Y,
+								BoundaryMode.FIXED);
 					}
 
 					// Position.
 					String positionText;
 					if (position == Position.Prone) {
-						positionText = "On front";						
+						positionText = "On front";
 					} else if (position == Position.Supine) {
 						positionText = "On back";
 					} else {
 						positionText = position.toString();
 					}
 					positionDisplay.setText(getString(R.string.estimatedPosition) + " " + positionText);
-					
+
 					// Audio.
 					if (audioEnabled) {
 						Queue<Double> audioQueue = extAudioRecorder.getAudioQueue();
@@ -446,8 +451,8 @@ public class SignalsRecorder extends SleepApActivity implements SensorEventListe
 						_audioPlot.clear();
 						_audioPlot.addSeries(_audioSeries, _audioFormatter);
 						_audioPlot.redraw();
-						_audioPlot.setRangeBoundaries(Constants.PARAM_AUDIO_GRAPH_MIN_Y, BoundaryMode.FIXED,
-								Constants.PARAM_AUDIO_GRAPH_MAX_Y, BoundaryMode.FIXED);
+						_audioPlot.setRangeBoundaries(Constants.PARAM_AUDIO_GRAPH_MIN_Y, BoundaryMode.FIXED, Constants.PARAM_AUDIO_GRAPH_MAX_Y,
+								BoundaryMode.FIXED);
 					}
 
 					// PPG.
@@ -532,12 +537,10 @@ public class SignalsRecorder extends SleepApActivity implements SensorEventListe
 		actigraphyQueue = new LinkedList<Double>();
 		positionDisplay = (TextView) findViewById(R.id.position);
 		recordingSign = (ImageView) findViewById(R.id.recordingSign);
-		
-		for(int i=0;i<5;++i)
-		{
+
+		for (int i = 0; i < 5; ++i) {
 			totalPositionTime[i] = 0;
 		}
-		
 
 		// Battery check receiver.
 		registerReceiver(this.batteryLevelReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
@@ -578,13 +581,15 @@ public class SignalsRecorder extends SleepApActivity implements SensorEventListe
 			Arrays.sort(recordingDirs);
 
 			// How many more recordings do we have in the app directory than are
-			// specified in the settings? Should account for questionnaires dir,
+			// specified in the settings? Should account for questionnaires
+			// file,
 			// which must exist for the user to have gotten to this stage
 			// (checklist).
 
 			int numberRecordings = 0;
-			for (String folderName : recordingDirs) {
-				if (!folderName.equals(Constants.FILENAME_QUESTIONNAIRE_DIRECTORY) && !folderName.equals(Constants.FILENAME_LOG_DIRECTORY)) {
+			for (String folderOrFileName : recordingDirs) {
+				if (!folderOrFileName.equals(Constants.FILENAME_QUESTIONNAIRE) && !folderOrFileName.equals(Constants.FILENAME_LOG_DIRECTORY)
+						&& !folderOrFileName.equals(Constants.FILENAME_FEEDBACK_DIRECTORY)) {
 					numberRecordings++;
 				}
 			}
@@ -602,9 +607,10 @@ public class SignalsRecorder extends SleepApActivity implements SensorEventListe
 						// We've deleted enough already.
 						break;
 					}
-					if (candidateFolderName.equals(Constants.FILENAME_QUESTIONNAIRE_DIRECTORY)
-							|| candidateFolderName.equals(Constants.FILENAME_LOG_DIRECTORY)) {
-						// Don't delete questionnaires directory.
+					if (candidateFolderName.equals(Constants.FILENAME_QUESTIONNAIRE) || candidateFolderName.equals(Constants.FILENAME_LOG_DIRECTORY)
+							|| candidateFolderName.equals(Constants.FILENAME_FEEDBACK_DIRECTORY)) {
+						// Don't delete questionnaire file or log/feedback
+						// directory.
 						continue;
 					}
 					// See if the path is a directory, and skip it if it isn't.
@@ -623,6 +629,25 @@ public class SignalsRecorder extends SleepApActivity implements SensorEventListe
 			}
 		}
 
+		// Copy latest questionnaire File
+		try {
+			File latestQuestionnaireFile = new File(appDirPath, Constants.FILENAME_QUESTIONNAIRE);
+			InputStream in = new FileInputStream(latestQuestionnaireFile);
+			OutputStream out = new FileOutputStream(new File(filesDirPath, Constants.FILENAME_QUESTIONNAIRE));
+			// Copy the bits from instream to outstream
+			byte[] buf = new byte[1024];
+			int len;
+			while ((len = in.read(buf)) > 0) {
+				out.write(buf, 0, len);
+			}
+			in.close();
+			out.close();
+		} catch (FileNotFoundException e) {
+			Log.e(Constants.CODE_APP_TAG, "FileNotFoundException copying Questionnaire file.");
+		} catch (IOException e) {
+			Log.e(Constants.CODE_APP_TAG, "IOException copying Questionnaire file.");
+		}
+
 		// Create txt files.
 		orientationFile = new File(filesDirPath, Constants.FILENAME_ORIENTATION);
 		accelerationFile = new File(filesDirPath, Constants.FILENAME_ACCELERATION_RAW);
@@ -637,21 +662,30 @@ public class SignalsRecorder extends SleepApActivity implements SensorEventListe
 		// Log start time so recording can begin in 30 minutes.
 		startTime = Calendar.getInstance(Locale.getDefault());
 		finishRecordingFlag = false;
-		if (sharedPreferences.getBoolean(Constants.PREF_RECORDING_START_DELAY, Constants.DEFAULT_RECORDING_START_DELAY)) {
+		recordingStartDelayMs = Constants.CONST_MILLIS_IN_MINUTE
+				* Integer.parseInt(sharedPreferences.getString(Constants.PREF_RECORDING_START_DELAY, Constants.DEFAULT_RECORDING_START_DELAY));
+		recordingDurationMs = Constants.CONST_MILLIS_IN_MINUTE
+				* Integer.parseInt(sharedPreferences.getString(Constants.PREF_RECORDING_DURATION, Constants.DEFAULT_RECORDING_DURATION));
+		if (recordingStartDelayMs > 0) {
 			startRecordingFlag = false;
 			AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-			dialogBuilder.setTitle(getString(R.string.delayAlertTitle)).setMessage(getString(R.string.delayAlertMessage))
-					.setPositiveButton(getString(R.string.ok), null);
+			dialogBuilder
+					.setTitle(getString(R.string.delayAlertTitle))
+					.setMessage(
+							getString(R.string.delayAlertMessage1) + " "
+									+ sharedPreferences.getString(Constants.PREF_RECORDING_START_DELAY, Constants.DEFAULT_RECORDING_START_DELAY) + " "
+									+ getString(R.string.delayAlertMessage2)).setPositiveButton(getString(R.string.ok), null);
 			delayAlertDialog = dialogBuilder.create();
 			delayAlertDialog.show();
 		} else {
 			startRecordingFlag = true;
 			// Notify user
+			Intent notificationIntent = new Intent(SignalsRecorder.this, SignalsRecorder.class);
+			PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
 			if (sharedPreferences.getBoolean(Constants.PREF_NOTIFICATIONS, Constants.DEFAULT_NOTIFICATIONS)) {
-				NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext())
-						.setSmallIcon(R.drawable.notification_icon)
+				NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext()).setSmallIcon(R.drawable.notification_icon)
 						.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.deviceaccessmic)).setContentTitle("SleepAp")
-						.setContentText(getString(R.string.startedRecordingNotification)).setAutoCancel(true);
+						.setContentText(getString(R.string.startedRecordingNotification)).setAutoCancel(false).setOngoing(true).setContentIntent(pendingIntent);
 				notificationManager.notify(Constants.CODE_APP_NOTIFICATION_ID, builder.build());
 				recordingSign.setVisibility(View.VISIBLE);
 			}
@@ -819,7 +853,6 @@ public class SignalsRecorder extends SleepApActivity implements SensorEventListe
 			public void onClick(DialogInterface dialog, int which) {
 				Intent intent = new Intent(SignalsRecorder.this, MainMenu.class);
 				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				intent.putExtra(Constants.EXTRA_HIDE_LICENCE, true);
 				startActivity(intent);
 			}
 		});
@@ -871,8 +904,7 @@ public class SignalsRecorder extends SleepApActivity implements SensorEventListe
 					double magnitude = Math.sqrt(magnitudeSquare);
 
 					actigraphyQueue.add(magnitude);
-					int secsToDisplay = Integer.parseInt(sharedPreferences.getString(Constants.PREF_GRAPH_SECONDS,
-							Constants.DEFAULT_GRAPH_RANGE));
+					int secsToDisplay = Integer.parseInt(sharedPreferences.getString(Constants.PREF_GRAPH_SECONDS, Constants.DEFAULT_GRAPH_RANGE));
 					int numberExtraSamples = actigraphyQueue.size() - (secsToDisplay * Constants.PARAM_SAMPLERATE_ACCELEROMETER);
 					if (numberExtraSamples > 0) {
 						for (int i = 0; i < numberExtraSamples; i++) {
@@ -927,8 +959,7 @@ public class SignalsRecorder extends SleepApActivity implements SensorEventListe
 					}
 
 					// Prone (1).
-					if ((((-180 < mOrientation[2] && mOrientation[2] < -135) || (135 < mOrientation[2] && mOrientation[2] < 180))
-							&& -45 < mOrientation[1] && mOrientation[1] < 45)) {
+					if ((((-180 < mOrientation[2] && mOrientation[2] < -135) || (135 < mOrientation[2] && mOrientation[2] < 180)) && -45 < mOrientation[1] && mOrientation[1] < 45)) {
 						positionValue = Constants.CODE_POSITION_PRONE;
 						position = Position.Prone;
 					}
@@ -946,13 +977,12 @@ public class SignalsRecorder extends SleepApActivity implements SensorEventListe
 					}
 
 					// Sitting up (5).
-					if ((((-135 < mOrientation[1] && mOrientation[1] < -45) || (45 < mOrientation[1] && mOrientation[1] < 135))
-							&& -45 < mOrientation[2] && mOrientation[2] < 45)) {
+					if ((((-135 < mOrientation[1] && mOrientation[1] < -45) || (45 < mOrientation[1] && mOrientation[1] < 135)) && -45 < mOrientation[2] && mOrientation[2] < 45)) {
 						positionValue = Constants.CODE_POSITION_SITTING;
 						position = Position.Sitting;
 					}
 
-					if ((oldPositionValue != positionValue) && (positionValue!=0) && startRecordingFlag) {
+					if ((oldPositionValue != positionValue) && (positionValue != 0) && startRecordingFlag) {
 						updatePositionChangeTime(oldPositionValue);
 						oldPositionValue = positionValue;
 						try {
@@ -1027,17 +1057,17 @@ public class SignalsRecorder extends SleepApActivity implements SensorEventListe
 		totalTime = Math.max(totalTime, 1);
 
 		// Computing % of time spent in each position
-		float supineProportion = ((float) totalPositionTime[Constants.CODE_POSITION_SUPINE-1] * 100) / totalTime;
-		float proneProportion = ((float) totalPositionTime[Constants.CODE_POSITION_PRONE-1] * 100) / totalTime;
-		float rightProportion = ((float) totalPositionTime[Constants.CODE_POSITION_RIGHT-1] * 100) / totalTime;
-		float leftProportion = ((float) totalPositionTime[Constants.CODE_POSITION_LEFT-1] * 100) / totalTime;
-		float sittingProportion = ((float) totalPositionTime[Constants.CODE_POSITION_SITTING-1] * 100) / totalTime;
+		float supineProportion = ((float) totalPositionTime[Constants.CODE_POSITION_SUPINE - 1] * 100) / totalTime;
+		float proneProportion = ((float) totalPositionTime[Constants.CODE_POSITION_PRONE - 1] * 100) / totalTime;
+		float rightProportion = ((float) totalPositionTime[Constants.CODE_POSITION_RIGHT - 1] * 100) / totalTime;
+		float leftProportion = ((float) totalPositionTime[Constants.CODE_POSITION_LEFT - 1] * 100) / totalTime;
+		float sittingProportion = ((float) totalPositionTime[Constants.CODE_POSITION_SITTING - 1] * 100) / totalTime;
 
 		try {
 			// Writing data into file
 			BufferedWriter out = new BufferedWriter(new FileWriter(bodyPositionFile, true));
-			out.write(String.valueOf(supineProportion) + ',' + String.valueOf(proneProportion) + ',' + String.valueOf(leftProportion)
-					+ ',' + String.valueOf(rightProportion) + ',' + String.valueOf(sittingProportion) + " \n");
+			out.write(String.valueOf(supineProportion) + ',' + String.valueOf(proneProportion) + ',' + String.valueOf(leftProportion) + ','
+					+ String.valueOf(rightProportion) + ',' + String.valueOf(sittingProportion) + " \n");
 			out.flush();
 			out.close();
 		} catch (IOException e) {
@@ -1101,11 +1131,12 @@ public class SignalsRecorder extends SleepApActivity implements SensorEventListe
 		});
 		dialogBuilder.create().show();
 	}
-	
+
 	/** Handles option selection. */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle item selection. Override SleepApActivity to stop recording if Main menu is pressed.
+		// Handle item selection. Override SleepApActivity to stop recording if
+		// Main menu is pressed.
 		switch (item.getItemId()) {
 		case R.id.menu_exit:
 			stopRecording();

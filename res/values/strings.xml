@@ -9,7 +9,7 @@
     <string name="infoquestion3">What causes OSA?</string>
     <string name="infoanswer3">OSA is caused by the collapse of the muscles and soft tissue in the back of the throat. This narrows or completely blocks the airway resulting in an interrupted supply of oxygen. The brain recognises this and wakes the person up enough for normal breathing to resume. There are a number of risk factors, including:\n\n\t&#8226;\tbeing overweight\n\t&#8226;\tbeing male\n\t&#8226;\tbeing over 50\n\t&#8226;\thaving a large neck\n\t&#8226;\talcohol/sedatives\n\t&#8226;\tsmoking\n\t&#8226;\tfamily history of OSA\n\t&#8226;\tdiabetes\n\t&#8226;\tnasal congestion</string>
     <string name="infoquestion4">How is OSA diagnosed?</string>
-    <string name="infoanswer4">OSA is diagnosed with a full night\'s sleep study. You will either spend a night in hospital or you will be given a kit to take home. Both setups record a variety of physiological signals, and possible a questionnaire. The data will be analysed by a sleep specialist who diagnoses sleep disorders.</string>
+    <string name="infoanswer4">OSA is diagnosed with a full night\'s sleep study. You will either spend a night in hospital or you will be given a kit to take home. Both setups record a variety of physiological signals, and possibly a questionnaire. The data will be analysed by a sleep specialist who diagnoses sleep disorders.</string>
     <string name="infoquestion5">How is OSA treated?</string>
     <string name="infoanswer5">Lifestyle changes, such as losing weight, quitting smoking, and avoiding alcohol, can all help in milder cases of OSA. The most common and effective treatment is continuous positive airway pressure (CPAP). This involves wearing a mask while asleep in order to keep the airway open. Other treatment options include surgery and dental devices.</string>
     <string name="infoquestion6">How can I minimise the risk of OSA?</string>
@@ -40,7 +40,7 @@
     <string name="odiHelpMessage">Oxygen Desaturation Index (ODI) is a measure of how often the amount of oxygen in your blood dips below normal. This happens frequently to OSA patients. An ODI of 5 or above means that you are at high risk of OSA.</string>
     <string name="stopBangHelpMessage">The questionnaire is used to screen for obstructive sleep apnoea (OSA). It can be used as a first layer of screening for OSA, but by itself it is not sufficient for any diagnostic purposes. A score of 3 or above means you are at high risk of OSA.</string>
     <string name="svmHelpMessage">Your risk of having OSA is calculated by a classifier designed to determine whether your sleep data means that you are likely to have OSA or not.</string>
-    <string name="cloudHelpMessage">If you wish you can upload your data for it to be analysed remotely. To do so, click \"Perform cloud analysis\" below.</string>
+    <string name="cloudHelpMessage">If you wish you can upload your data for it to be analysed remotely. To do so, tap \"Perform cloud analysis\" below.</string>
     <string name="odiHelpTitle">ODI</string>
     <string name="stopBangHelpTitle">Questionnaire</string>
     <string name="svmHelpTitle">Risk</string>
@@ -111,8 +111,8 @@
     <string name="bluetoothNotRequired2">Pairing not required.</string>
     <string name="bluetoothTurnedOff">Bluetooth has been turned off. Please turn it back on to connect.</string>
     <string name="bluetoothTurnedBackOn">Bluetooth has been turned back on. You can now reconnect.</string>
-    <string name="noQuestionnaireFound">Can\'t find a record of your quesionnaire - please ensure you have completed it.</string>
-    <string name="readyToRecord">Click \'Next\' to continue.</string>
+    <string name="noQuestionnaireFound">Can\'t find a record of your questionnaire - please ensure you have completed it.</string>
+    <string name="readyToRecord">Tap \'Next\' to continue.</string>
     <string name="bluetoothTurnedOn">Bluetooth turned on.</string>
     <string name="bluetoothNotTurnedOn">Bluetooth was not turned on.</string>
     <string name="bluetoothConnectionUnsuccessful">Bluetooth connection unsuccessful.</string>
@@ -121,7 +121,8 @@
     <string name="soundSamplesIntro">Below are some examples of breathing during sleep.</string>
     <string name="advancedSettings">Advanced settings</string>
     <string name="delayAlertTitle">Recording</string>
-    <string name="delayAlertMessage">Recording will start in 30 minutes.</string>
+    <string name="delayAlertMessage1">Recording will start in </string>
+    <string name="delayAlertMessage2"> minute(s).</string>
     <string name="finishedAlertTitle">Stopped</string>
     <string name="finishedAlertFailure">Recording has been stopped. Because of this, no analysis is possible and the files will be deleted.</string>
     <string name="finishedAlertSuccess">Recording finished successfully. You can now analyse your data.</string>
@@ -147,8 +148,10 @@
     <string name="notificationsPreferenceLabel">Notifications</string>
     <string name="advancedUserPreferenceSummary">Enable settings for advanced users.</string>
     <string name="advancedUserPreferenceLabel">Advanced settings</string>
-    <string name="recordingDelayPreferenceSummary">Observe 30 min delay before recording begins.</string>
+    <string name="recordingDelayPreferenceSummary">Delay before recording begins (minutes): </string>
     <string name="recordingDelayPreferenceLabel">Recording delay</string>
+    <string name="recordingDurationPreferenceSummary">Duration of recording (minutes): </string>
+    <string name="recordingDurationPreferenceLabel">Recording duration</string>
     <string name="fileDeletionPreferenceSummary">Delete files on early exit from recording.</string>
     <string name="fileDeletionPreferenceLabel">File deletion</string>
     <string name="checkSpaceandbatteryPreferenceSummary">Require 500MB space and 60% battery to record.</string>
@@ -176,7 +179,7 @@
     <string name="estimatedPosition">Estimated position:</string>
     <string name="aboutus">About</string>
     <string name="aboutUsAlertTitle">About us</string>
-    <string name="aboutUsAlertMessage">SleepAp version 1.2 (beta). This application is based on ongoing research within the Intelligent Patient Monitoring group, Department of Engineering Science, University of Oxford. To report bugs or give us feedback, please send an email to &lt;a href=\"mailto:sleepapdev@gmail.com\"&gt;sleepapdev@gmail.com&lt;/a&gt;.&lt;br /&gt;&lt;br /&gt;Copyright &#169; 2013, University of Oxford. All rights reserved. Software released under the &lt;a href=\"http://www.gnu.org/licenses/gpl.html\"&gt;GNU General Public Licence&lt;/a&gt;.&lt;br /&gt;&lt;br /&gt;NOT MEDICAL SOFTWARE. This software is provided for informational or research purposes only, and is not for professional medical use, diagnosis, treatment or care, nor is it intended to be a substitute therefor. Always seek the advice of a physician or other qualified health provider properly licensed to practice medicine or general healthcare in your jurisdiction concerning any questions you may have regarding any health problem. Never disregard professional medical advice or delay in seeking it because of something you have observed through the use of this software. Always consult with your physician or other qualified health care provider before embarking on a new treatment, diet or fitness programme.&lt;/a&gt;&lt;br /&gt;&lt;br /&gt;Graphical charts copyright &#169; &lt;a href=\"http://androidplot.com/\"&gt;AndroidPlot&lt;/a&gt;, SVM component copyright &#169; &lt;a href=\"http://www.csie.ntu.edu.tw/~cjlin/libsvm/\"&gt;LIBSVM&lt;/a&gt; - all rights reserved.</string>
+    <string name="aboutUsAlertMessage">SleepAp version 1.3 (beta). This application is based on ongoing research within the Intelligent Patient Monitoring group, Department of Engineering Science, University of Oxford. To report bugs or give us feedback, please send an email to &lt;a href=\"mailto:sleepapdev@gmail.com\"&gt;sleepapdev@gmail.com&lt;/a&gt;.&lt;br /&gt;&lt;br /&gt;Copyright &#169; 2013, University of Oxford. All rights reserved. Software released under the &lt;a href=\"http://www.gnu.org/licenses/gpl.html\"&gt;GNU General Public Licence&lt;/a&gt;.&lt;br /&gt;&lt;br /&gt;NOT MEDICAL SOFTWARE. This software is provided for informational or research purposes only, and is not for professional medical use, diagnosis, treatment or care, nor is it intended to be a substitute therefor. Always seek the advice of a physician or other qualified health provider properly licensed to practice medicine or general healthcare in your jurisdiction concerning any questions you may have regarding any health problem. Never disregard professional medical advice or delay in seeking it because of something you have observed through the use of this software. Always consult with your physician or other qualified health care provider before embarking on a new treatment, diet or fitness programme.&lt;/a&gt;&lt;br /&gt;&lt;br /&gt;Graphical charts copyright &#169; &lt;a href=\"http://androidplot.com/\"&gt;AndroidPlot&lt;/a&gt;, SVM component copyright &#169; &lt;a href=\"http://www.csie.ntu.edu.tw/~cjlin/libsvm/\"&gt;LIBSVM&lt;/a&gt; - all rights reserved.</string>
     <string name="processingData">Processing data&#8230;</string>
     <string name="microphoneLabel">Microphone</string>
     <string name="help">Help</string>
@@ -207,6 +210,38 @@
     <string name="odiAnalysisDone">\nODI: done.</string>
     <string name="movementLabel">Movement</string>
     <string name="on">on</string>
+    <string name="noQuestionnaireFileFound">Please fill in the questionnaire before proceeding.</string>
+    <string name="feedback">Give feedback</string>
+    <string name="fb0">Post-sleep questionnaire</string>
+    <string name="fb1">Did you sleep any worse than you usually do?</string>
+    <string name="fb2">What caused the most discomfort?</string>
+    <string name="fb3">On what side of your body do you usually sleep?</string>
+    <string name="fb4">Did you have any difficulty navigating the app interface? If so, what was difficult or confusing?</string>
+    <string name="fb5">If you have additional comments, please let us know.</string>
+    <string name="muchWorse">Much worse</string>
+    <string name="slightlyWorse">Slightly worse</string>
+    <string name="sameAsUsual">Same as usual</string>
+    <string name="slightlyBetter">Slightly better</string>
+    <string name="muchBetter">Much better</string>
+    <string name="microphoneOnFace">Microphone on face</string>
+    <string name="pulseOxOnFinger">Pulse oximeter on finger</string>
+    <string name="pulseOxOnWrist">Pulse oximeter on wrist</string>
+    <string name="phoneOnArm">Phone on arm</string>
+    <string name="knowledgeThatSleep">Knowledge that my sleep was being recorded</string>
+    <string name="nothingWasUncomfortable">Nothing was uncomfortable</string>
+    <string name="myBack">My back</string>
+    <string name="mySide">My side</string>
+    <string name="myStomach">My stomach</string>
+    <string name="iTossAndTurn">I toss and turn</string>    
+    <string name="nothingWasConfusing">Nothing was confusing</string>
+    <string name="thePreSleepQuestionnaire">The pre-sleep questionnaire</string>
+    <string name="settingUp">Setting up the equipment</string>
+    <string name="startingRecording">Starting the recording</string>
+    <string name="thisQuestionnaire">This post-sleep questionnaire</string>
+    <string name="feedbackAlertTitle">Thank you!</string>
+    <string name="feedbackAlertMessage">Your feedback has been recorded. We will use this information to improve SleepAp.</string>
+    <string name="agree">Agree</string>
+    
     
     <string-array name="ethnicity_arrays">
         <item>Prefer not to say</item>

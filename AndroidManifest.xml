@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ibme.sleepap"
-    android:versionCode="2"
-    android:versionName="1.2" >
+    android:versionCode="3"
+    android:versionName="1.3" >
 
     <uses-sdk
         android:minSdkVersion="10"
@@ -34,11 +34,18 @@
         <activity android:name="ibme.sleepap.history.ViewHistory" />
         <activity android:name="ibme.sleepap.history.ViewAnalysis" />
         <activity android:name="ibme.sleepap.Settings" />
-        <activity android:name="ibme.sleepap.Tour" />
+        <activity
+            android:name="ibme.sleepap.Tour"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="ibme.sleepap.Feedback"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name="ibme.sleepap.SleepApActivity" />
         <activity android:name="ibme.sleepap.education.OsaQuestions" />
         <activity android:name="ibme.sleepap.education.OsaAnswers" />
-        <activity android:name="ibme.sleepap.education.AudioSamples" />
+        <activity
+            android:name="ibme.sleepap.education.AudioSamples"
+            android:screenOrientation="portrait" />
         <activity android:name="ibme.sleepap.analysis.ChooseData" />
         <activity
             android:name="ibme.sleepap.analysis.PerformAnalysis"
@@ -52,6 +59,7 @@
         <activity android:name="ibme.sleepap.recording.PreRecordingChecklist" />
         <activity
             android:name="ibme.sleepap.recording.SignalsRecorder"
+            android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity android:name="ibme.sleepap.screening.StopBangResults" />
         <activity

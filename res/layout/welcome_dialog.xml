@@ -8,22 +8,24 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:layout_weight="6" >
 
         <TextView
             android:id="@+id/about"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableTop="@drawable/sleep_app"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:drawablePadding="10dp"
+            android:drawableTop="@drawable/sleep_app"
             android:paddingTop="10dp" />
     </ScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_weight="1"
         android:gravity="center"
         android:orientation="vertical" >
@@ -39,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/alertdialog_buttonstyle"
-            android:text="@string/ok"
+            android:text="@string/agree"
             android:textSize="14sp" />
     </LinearLayout>
 

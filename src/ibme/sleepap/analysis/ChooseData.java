@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2013, J. Behar, A. Roebuck, M. Shahid, J. Daly, A. Hallack, 
- * N. Palmius, G. Clifford (University of Oxford). All rights reserved.
+ * N. Palmius, K. Niehaus, G. Clifford (University of Oxford). All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without modification, 
  * are permitted provided that the following conditions are met:
@@ -50,7 +50,6 @@ import java.io.File;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -69,7 +68,6 @@ public class ChooseData extends SleepApActivity {
 
 		Intent callingIntent = getIntent();
 		recordingDir = (File) callingIntent.getSerializableExtra(Constants.EXTRA_RECORDING_DIRECTORY);
-		final File appDir = new File(Environment.getExternalStorageDirectory().getPath() + "/SleepAp/");
 
 		audioCheckBox = (CheckBox) findViewById(R.id.opt_audio);
 		actigraphyCheckBox = (CheckBox) findViewById(R.id.opt_actigraphy);
@@ -77,21 +75,13 @@ public class ChooseData extends SleepApActivity {
 		ppgCheckBox = (CheckBox) findViewById(R.id.opt_PPG);
 		spo2CheckBox = (CheckBox) findViewById(R.id.opt_o2Sat);
 
-		// Look for questionnaire file.
-		File questionnaireDir = new File(appDir, Constants.FILENAME_QUESTIONNAIRE_DIRECTORY);
-		for (File candidateFile : questionnaireDir.listFiles()) {
-
+		for (File candidateFile : recordingDir.listFiles()) {
 			String candidateFileName = candidateFile.getName();
 			if (candidateFileName.equals(Constants.FILENAME_QUESTIONNAIRE)) {
 				markCheckBoxAvailable(demographicsCheckBox);
 				demoFile = candidateFile;
 				continue;
 			}
-		}
-
-		for (File candidateFile : recordingDir.listFiles()) {
-
-			String candidateFileName = candidateFile.getName();
 			if (candidateFileName.equals(Constants.FILENAME_ACCELERATION_PROCESSED)) {
 				markCheckBoxAvailable(actigraphyCheckBox);
 				accelerationFile = candidateFile;

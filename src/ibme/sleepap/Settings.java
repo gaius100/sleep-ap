@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2013, J. Behar, A. Roebuck, M. Shahid, J. Daly, A. Hallack, 
- * N. Palmius, G. Clifford (University of Oxford). All rights reserved.
+ * N. Palmius, K. Niehaus, G. Clifford (University of Oxford). All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without modification, 
  * are permitted provided that the following conditions are met:
@@ -55,7 +55,8 @@ public class Settings extends PreferenceActivity implements OnSharedPreferenceCh
 	private EditTextPreference numberRecordingsPreference;
 	private EditTextPreference macAddressPreference;
 	private EditTextPreference graphsPreference;
-	private CheckBoxPreference recordingDelayPreference;
+	private EditTextPreference recordingDelayPreference;
+	private EditTextPreference recordingDurationPreference;
 	private CheckBoxPreference earlyExitDeletionPreference;
 	private CheckBoxPreference checkSpaceandbatteryPreference;
 	private CheckBoxPreference writeLogPreference;
@@ -71,7 +72,8 @@ public class Settings extends PreferenceActivity implements OnSharedPreferenceCh
 		numberRecordingsPreference = (EditTextPreference) getPreferenceScreen().findPreference(Constants.PREF_NUMBER_RECORDINGS);
 		macAddressPreference = (EditTextPreference) getPreferenceScreen().findPreference(Constants.PREF_MAC_ADDRESS);
 		graphsPreference = (EditTextPreference) getPreferenceScreen().findPreference(Constants.PREF_GRAPH_SECONDS);
-		recordingDelayPreference = (CheckBoxPreference) getPreferenceScreen().findPreference(Constants.PREF_RECORDING_START_DELAY);
+		recordingDelayPreference = (EditTextPreference) getPreferenceScreen().findPreference(Constants.PREF_RECORDING_START_DELAY);
+		recordingDurationPreference = (EditTextPreference) getPreferenceScreen().findPreference(Constants.PREF_RECORDING_DURATION);
 		earlyExitDeletionPreference = (CheckBoxPreference) getPreferenceScreen().findPreference(Constants.PREF_EARLY_EXIT_DELETION);
 		checkSpaceandbatteryPreference = (CheckBoxPreference) getPreferenceScreen().findPreference(Constants.PREF_CHECK_SPACEANDBATTERY);
 		writeLogPreference = (CheckBoxPreference) getPreferenceScreen().findPreference(Constants.PREF_WRITE_LOG);
@@ -83,10 +85,12 @@ public class Settings extends PreferenceActivity implements OnSharedPreferenceCh
 		super.onResume();
 		// Set up initial values.
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-		numberRecordingsPreference.setSummary(getString(R.string.recordingsPreferenceSummary) + " " + sharedPreferences.getString(Constants.PREF_NUMBER_RECORDINGS, "3"));
+		numberRecordingsPreference.setSummary(getString(R.string.recordingsPreferenceSummary) + " " + sharedPreferences.getString(Constants.PREF_NUMBER_RECORDINGS, Constants.DEFAULT_NUMBER_RECORDINGS));
 		macAddressPreference.setSummary(getString(R.string.macAddressPreferencesSummary) + " " + sharedPreferences.getString(Constants.PREF_MAC_ADDRESS, Constants.DEFAULT_MAC_ADDRESS));
 		graphsPreference.setSummary(getString(R.string.graphPreferenceSummary) + " " + sharedPreferences.getString(Constants.PREF_GRAPH_SECONDS, Constants.DEFAULT_GRAPH_RANGE));
 		odiThresholdPreference.setSummary(getString(R.string.odiThresholdPreferenceSummary) + " " + odiThresholdPreference.getValue() + "%%");
+		recordingDelayPreference.setSummary(getString(R.string.recordingDelayPreferenceSummary) + " " + sharedPreferences.getString(Constants.PREF_RECORDING_START_DELAY, Constants.DEFAULT_RECORDING_START_DELAY));
+		recordingDurationPreference.setSummary(getString(R.string.recordingDurationPreferenceSummary) + " " + sharedPreferences.getString(Constants.PREF_RECORDING_DURATION, Constants.DEFAULT_RECORDING_DURATION));
 		// Set up a listener for key changes.
 		PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
 	};
@@ -101,17 +105,40 @@ public class Settings extends PreferenceActivity implements OnSharedPreferenceCh
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 		if (key.equals(Constants.PREF_NUMBER_RECORDINGS)) {
-			numberRecordingsPreference.setSummary(getString(R.string.recordingsPreferenceSummary) + " " + sharedPreferences.getString(Constants.PREF_NUMBER_RECORDINGS, "3"));
+			numberRecordingsPreference.setSummary(getString(R.string.recordingsPreferenceSummary) + " " + sharedPreferences.getString(Constants.PREF_NUMBER_RECORDINGS, Constants.DEFAULT_NUMBER_RECORDINGS));
 		} else if (key.equals(Constants.PREF_MAC_ADDRESS)) {
 			macAddressPreference.setSummary(getString(R.string.macAddressPreferencesSummary) + " " + sharedPreferences.getString(Constants.PREF_MAC_ADDRESS, Constants.DEFAULT_MAC_ADDRESS));
 		} else if (key.equals(Constants.PREF_GRAPH_SECONDS)) {
 			graphsPreference.setSummary(getString(R.string.graphPreferenceSummary) + " " + sharedPreferences.getString(Constants.PREF_GRAPH_SECONDS, Constants.DEFAULT_GRAPH_RANGE));
 		} else if (key.equals(Constants.PREF_ODI_THRESHOLD)) {
 			odiThresholdPreference.setSummary(getString(R.string.odiThresholdPreferenceSummary) + " " + odiThresholdPreference.getValue() + "%%");
+		} else if (key.equals(Constants.PREF_RECORDING_START_DELAY)) {
+			String val = sharedPreferences.getString(Constants.PREF_RECORDING_START_DELAY, Constants.DEFAULT_RECORDING_START_DELAY);
+			if (val != null && !val.equals("")) {
+				int candidate = Integer.parseInt(val);
+				if (candidate < 0) {
+					recordingDelayPreference.setText("0");
+				}
+			} else {
+				recordingDelayPreference.setText("0");
+			}
+			recordingDelayPreference.setSummary(getString(R.string.recordingDelayPreferenceSummary) + " " + sharedPreferences.getString(Constants.PREF_RECORDING_START_DELAY, Constants.DEFAULT_RECORDING_START_DELAY));
+		} else if (key.equals(Constants.PREF_RECORDING_DURATION)) {
+			String val = sharedPreferences.getString(Constants.PREF_RECORDING_DURATION, Constants.DEFAULT_RECORDING_DURATION);
+			if (val != null && !val.equals("")) {
+				int candidate = Integer.parseInt(val);
+				if (candidate < 1) {
+					recordingDurationPreference.setText("1");
+				}
+			} else {
+				recordingDurationPreference.setText("1");
+			}
+			recordingDurationPreference.setSummary(getString(R.string.recordingDurationPreferenceSummary) + " " + sharedPreferences.getString(Constants.PREF_RECORDING_DURATION, Constants.DEFAULT_RECORDING_DURATION));
 		} else if (key.equals(Constants.PREF_ADVANCED_USER)) {
 			// If the user has just turned off advanced settings, restore them to their defaults.
 			if (!sharedPreferences.getBoolean(Constants.PREF_ADVANCED_USER, Constants.DEFAULT_ADVANCED_USER)) {
-				recordingDelayPreference.setChecked(Constants.DEFAULT_RECORDING_START_DELAY);
+				recordingDelayPreference.setText(Constants.DEFAULT_RECORDING_START_DELAY);
+				recordingDurationPreference.setText(Constants.DEFAULT_RECORDING_DURATION);
 				earlyExitDeletionPreference.setChecked(Constants.DEFAULT_EARLY_EXIT_DELETION);
 				checkSpaceandbatteryPreference.setChecked(Constants.DEFAULT_CHECK_SPACEANDBATTERY);
 				writeLogPreference.setChecked(Constants.DEFAULT_WRITE_LOG);

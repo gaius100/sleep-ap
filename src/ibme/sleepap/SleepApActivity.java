@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2013, J. Behar, A. Roebuck, M. Shahid, J. Daly, A. Hallack, 
- * N. Palmius, G. Clifford (University of Oxford). All rights reserved.
+ * N. Palmius, K. Niehaus, G. Clifford (University of Oxford). All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without modification, 
  * are permitted provided that the following conditions are met:
@@ -52,7 +52,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-public class SleepApActivity extends Activity {
+public abstract class SleepApActivity extends Activity {
 
 	// All activities where we want an action menu extend this class - saves
 	// repeating the methods.
@@ -70,6 +70,10 @@ public class SleepApActivity extends Activity {
 		// Handle item selection.
 		Intent intent;
 		switch (item.getItemId()) {
+		case R.id.menu_feedback:
+			intent = new Intent(SleepApActivity.this, Feedback.class);
+			startActivity(intent);
+			return true;
 		case R.id.menu_settings:
 			intent = new Intent(SleepApActivity.this, Settings.class);
 			startActivity(intent);
@@ -77,7 +81,6 @@ public class SleepApActivity extends Activity {
 		case R.id.menu_exit:
 			intent = new Intent(SleepApActivity.this, MainMenu.class);
 			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			intent.putExtra(Constants.EXTRA_HIDE_LICENCE, true);
 			startActivity(intent);
 			return true;
 		case R.id.menu_tour:

@@ -48,13 +48,30 @@
         android:title="@string/advancedUserPreferenceLabel" />
 
     <PreferenceCategory android:title="@string/advancedSettings" >
-        <CheckBoxPreference
-            android:defaultValue="true"
+        <EditTextPreference
+            android:defaultValue="30"
             android:dependency="pref_advanced"
+            android:dialogMessage="@string/recordingDelayPreferenceSummary"
+            android:dialogTitle="@string/recordingDelayPreferenceLabel"
             android:icon="@drawable/deviceaccesstime"
             android:key="pref_recordingstartdelay"
-            android:summary="@string/recordingDelayPreferenceSummary"
+            android:negativeButtonText="@string/cancelButtonLabel"
+            android:numeric="integer"
+            android:positiveButtonText="@string/ok"
+            android:selectAllOnFocus="true"
             android:title="@string/recordingDelayPreferenceLabel" />
+        <EditTextPreference
+            android:defaultValue="240"
+            android:dependency="pref_advanced"
+            android:dialogMessage="@string/recordingDurationPreferenceSummary"
+            android:dialogTitle="@string/recordingDurationPreferenceLabel"
+            android:icon="@drawable/deviceaccesstime"
+            android:key="pref_recordingduration"
+            android:negativeButtonText="@string/cancelButtonLabel"
+            android:numeric="integer"
+            android:positiveButtonText="@string/ok"
+            android:selectAllOnFocus="true"
+            android:title="@string/recordingDurationPreferenceLabel" />
         <CheckBoxPreference
             android:defaultValue="true"
             android:dependency="pref_advanced"
@@ -76,6 +93,7 @@
             android:key="pref_writelog"
             android:summary="@string/writeLogPreferenceSummary"
             android:title="@string/writeLogPreferenceLabel" />
+
         <ListPreference
             android:defaultValue="3"
             android:dependency="pref_advanced"

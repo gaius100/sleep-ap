@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2013, J. Behar, A. Roebuck, M. Shahid, J. Daly, A. Hallack, 
- * N. Palmius, G. Clifford (University of Oxford). All rights reserved.
+ * N. Palmius, K. Niehaus, G. Clifford (University of Oxford). All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without modification, 
  * are permitted provided that the following conditions are met:
@@ -78,7 +78,6 @@ public class RecordingsList extends SleepApActivity implements OnClickListener {
 
 		File appDir = new File(Environment.getExternalStorageDirectory().getPath() + "/" + getString(R.string.app_name));
 		if (appDir.isDirectory()) {
-
 			File[] fileList = appDir.listFiles();
 			folderList = new ArrayList<File>();
 
@@ -88,8 +87,8 @@ public class RecordingsList extends SleepApActivity implements OnClickListener {
 
 				for (int i = 0; i < fileList.length; i++) {
 					if (fileList[i].isDirectory()) {
-						if (!fileList[i].getName().equals(Constants.FILENAME_QUESTIONNAIRE_DIRECTORY)
-								&& !fileList[i].getName().equals(Constants.FILENAME_LOG_DIRECTORY)) {
+						if (!fileList[i].getName().equals(Constants.FILENAME_QUESTIONNAIRE) && !fileList[i].getName().equals(Constants.FILENAME_LOG_DIRECTORY)
+								&& !fileList[i].getName().equals(Constants.FILENAME_FEEDBACK_DIRECTORY)) {
 							// Add folder at the start of the list.
 							folderList.add(0, fileList[i]);
 						} else {
@@ -119,8 +118,7 @@ public class RecordingsList extends SleepApActivity implements OnClickListener {
 						newButton.setGravity(Gravity.CENTER);
 						newButton.setTextColor(Color.WHITE);
 						newButton.setId(i);
-						LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, Utils.dipToPixels(50,
-								this));
+						LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, Utils.dipToPixels(50, this));
 						param.topMargin = Utils.dipToPixels(10, this);
 						newButton.setOnClickListener(RecordingsList.this);
 						mainLayout.addView(newButton, param);
@@ -162,12 +160,11 @@ public class RecordingsList extends SleepApActivity implements OnClickListener {
 		String timeVal = fileName.substring(8, 10) + ":" + fileName.substring(10, 12) + ":" + fileName.substring(12, 14);
 		return timeVal + " " + getString(R.string.on) + " " + dateVal;
 	}
-	
+
 	@Override
 	public void onBackPressed() {
 		Intent intent = new Intent(RecordingsList.this, MainMenu.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		intent.putExtra(Constants.EXTRA_HIDE_LICENCE, true);
 		startActivity(intent);
 	}
 }
