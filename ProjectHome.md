@@ -1,0 +1,9 @@
+An Android application to screen for and monitor Obstructive Sleep Apnoea (OSA). The app consists of an education module including examples of OSA sound clips, a clinically-validated questionnaire to assess risk of OSA, and recording and analysis modules using accelerometry, audio and PPG data acquired from a Bluetooth pulse oximeter to classify patients as either requiring OSA treatment or not.
+
+This application is based on ongoing research within the Intelligent Patient Monitoring group, Department of Engineering Science, University of Oxford. To report bugs or give us feedback, please send an email to sleepapdev@gmail.com.
+
+Copyright © 2013, University of Oxford. All rights reserved. Software released under the GNU General Public Licence (v3).
+
+NOT MEDICAL SOFTWARE. This software is provided for informational or research purposes only, and is not for professional medical use, diagnosis, treatment or care, nor is it intended to be a substitute therefor. Always seek the advice of a physician or other qualified health provider properly licensed to practice medicine or general healthcare in your jurisdiction concerning any questions you may have regarding any health problem. Never disregard professional medical advice or delay in seeking it because of something you have observed through the use of this software. Always consult with your physician or other qualified health care provider before embarking on a new treatment, diet or fitness programme.
+
+Graphical charts copyright (c) AndroidPlot (http://androidplot.com), SVM component copyright (c) LIBSVM (http://www.csie.ntu.edu.tw/~cjlin/libsvm/) - all rights reserved.
